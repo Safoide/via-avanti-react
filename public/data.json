@@ -1,0 +1,380 @@
+[
+    {
+        "id": 1,
+        "nombre": "Jeans POP",
+        "descripcion_corta": "Jean crop elastizado recto, largo a los tobillos, con roturas. Composición: 100% algodón",
+        "precio_rebajado": 3744,
+        "precio_normal": 4160,
+        "Categorías": "SALE, Pantalones",
+        "imagenes": [
+            "../imgs/producto/jeans_pop/pop1.jpg",
+            "../imgs/producto/jeans_pop/pop2.jpg"
+        ],
+        "colores": [
+            "Celeste"
+        ]
+    },
+    {
+        "id": 2,
+        "nombre": "Sweater MIA",
+        "descripcion_corta": "Sweater Ancho color segun cuello",
+        "precio_rebajado": null,
+        "precio_normal": 3590,
+        "categorias": "Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/sweater_mia/mia1.jpg",
+            "../imgs/producto/sweater_mia/mia2.jpg"
+        ],
+        "colores": [
+            "Celeste con Gris",
+            "Negro con camel"
+        ]
+    },
+    {
+        "id": 3,
+        "nombre": "Sweater CAMPANA",
+        "descripcion_corta": "Sweater con detalle de campana en manga de tejido Bremer",
+        "precio_rebajado": null,
+        "precio_normal": 2450,
+        "categorias": "Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/sweater_campana/campana1.jpg",
+            "../imgs/producto/sweater_campana/campana2.jpg"
+        ],
+        "colores": [
+            "Celeste",
+            "Fucsia",
+            "Rojo"
+        ]
+    },
+    {
+        "id": 4,
+        "nombre": "Camisa BARON",
+        "descripcion_corta": "Camisa de denim con bolsillos adelante y a los costados. Tiene pasacinto, lazo y terminación ovalada\n\\n\n\\ntalles Amplios",
+        "precio_rebajado": null,
+        "precio_normal": 2700,
+        "categorias": "Camisas",
+        "imagenes": [
+            "../imgs/producto/camisa_baron/baron1.jpg",
+            "../imgs/producto/camisa_baron/baron2.jpg"
+        ],
+        "colores": [
+            "Azul"
+        ]
+    },
+    {
+        "id": 5,
+        "nombre": "Blusa CLOUD",
+        "descripcion_corta": "Blusa de gasa manga larga con detalles en encaje",
+        "precio_rebajado": null,
+        "precio_normal": 1600,
+        "categorias": "Abrigos > Blusas",
+        "imagenes": [
+            "../imgs/producto/blusa_cloud/cloud1.jpg",
+            "../imgs/producto/blusa_cloud/cloud2.jpg"
+        ],
+        "colores": [
+            "Negro"
+        ]
+    },
+    {
+        "id": 6,
+        "nombre": "Camisa CANOPUS",
+        "descripcion_corta": "Camisa holgada rayada, con botones y bolsillos",
+        "precio_rebajado": 1620,
+        "precio_normal": 1800,
+        "categorias": "Camisas, SALE",
+        "imagenes": [
+            "../imgs/producto/camisa_canopus/canopus1.jpg",
+            "../imgs/producto/camisa_canopus/canopus2.jpg"
+        ],
+        "colores": [
+            "Blanco"
+        ]
+    },
+    {
+        "id": 7,
+        "nombre": "Camisa CLOUDY",
+        "¿Está destacado?": 1,
+        "descripcion_corta": "Camisa sastrera oversize con bolsillos delanteros.",
+        "precio_rebajado": null,
+        "precio_normal": 2500,
+        "categorias": "Camisas",
+        "imagenes": [
+            "../imgs/producto/camisa_cloudy/cloudy1.jpg",
+            "../imgs/producto/camisa_cloudy/cloudy2.jpg"
+        ],
+        "colores": [
+            "Azul",
+            "Marino",
+            "Beige",
+            "Crudo",
+            "Negro"
+        ]
+    },
+    {
+        "id": 8,
+        "nombre": "Chaleco LUNA",
+        "descripcion_corta": "Hermoso Chaleco con detalles al costado",
+        "precio_rebajado": null,
+        "precio_normal": 2300,
+        "categorias": "Chalecos",
+        "imagenes": [
+            "../imgs/producto/chaleco_luna/luna1.jpg",
+            "../imgs/producto/chaleco_luna/luna2.jpg"
+        ],
+        "colores": [
+            "Camel"
+        ]
+    },
+    {
+        "id": 9,
+        "nombre": "Sweater ROMA",
+        "descripcion_corta": "Sweater de tela bremer con detalle al frente y costado",
+        "precio_rebajado": 2376,
+        "precio_normal": 2700,
+        "categorias": "SALE, Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/sweater_roma/roma1.jpg",
+            "../imgs/producto/sweater_roma/roma2.jpg"
+        ],
+        "colores": [
+            "Crudo",
+            "Negro"
+        ]
+    },
+    {
+        "id": 10,
+        "nombre": "Pantalon CHICAGO",
+        "¿Está destacado?": 0,
+        "descripcion_corta": "Pantalón de piqué de punto, con bolsillos, cartera falsa en delantero y elástico en cintura. Composición: 60% rayón, 40% nylon",
+        "precio_rebajado": null,
+        "precio_normal": 3280,
+        "Categorías": "Pantalones",
+        "imagenes": [
+            "../imgs/producto/pantalon_chicago/chicago1.jpg",
+            "../imgs/producto/pantalon_chicago/chicago2.jpg"
+        ],
+        "colores": [
+            "Beige",
+            "Mostaza"
+        ]
+    },
+    {
+        "id": 11,
+        "nombre": "Sweater TANNIA",
+        "descripcion_corta": "Sweater Importado con Bolsillos delantero y trenzado en espalda de hilado BREMER",
+        "precio_rebajado": null,
+        "precio_normal": 3500,
+        "categorias": "Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/sweater_tannia/tannia1.jpg",
+            "../imgs/producto/sweater_tannia/tannia2.jpg"
+        ],
+        "colores": [
+            "Beige",
+            "Gris",
+            "Mostaza",
+            "Negro"
+        ]
+    },
+    {
+        "id": 12,
+        "nombre": "Campera NERO",
+        "descripcion_corta": "Campera con piel suave por dentro.\nBolsillos delanteros. Puños en las mangas.\nElástico en la cintura.",
+        "precio_rebajado": 5280,
+        "precio_normal": 6000,
+        "categorias": "Abrigos > Camperas, SALE",
+        "imagenes": [
+            "../imgs/producto/campera_nero/nero1.jpg",
+            "../imgs/producto/campera_nero/nero2.jpg"
+        ],
+        "colores": [
+            "Beige"
+        ]
+    },
+    {
+        "id": 13,
+        "nombre": "Sweater Monaco",
+        "descripcion_corta": "Detalle: Sweater con moño en espalda\nMaterial : Hilado Bremer 100%\nMedidas: Busto 94 cm - Largo 58 cm - Largo de manga: 57cm",
+        "precio_rebajado": null,
+        "precio_normal": 2450,
+        "categorias": "Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/sweater_monaco/monaco1.jpg",
+            "../imgs/producto/sweater_monaco/monaco2.jpg"
+        ],
+        "colores": [
+            "Beige"
+        ]
+    },
+    {
+        "id": 14,
+        "nombre": "Campera ALICE",
+        "descripcion_corta": "Campera corta de cuerina con bolsillos adelante y botones negros.",
+        "precio_rebajado": null,
+        "precio_normal": 3700,
+        "categorias": "Abrigos > Camperas",
+        "imagenes": [
+            "../imgs/producto/campera_alice/alice1.jpg",
+            "../imgs/producto/campera_alice/alice2.jpg"
+        ],
+        "colores": [
+            "Negro"
+        ]
+    },
+    {
+        "id": 15,
+        "nombre": "Campera LEO",
+        "descripcion_corta": "Campera de tela rústica con corderito y capucha. Bolsillos delanteros",
+        "precio_rebajado": null,
+        "precio_normal": 4000,
+        "categorias": "Abrigos > Camperas",
+        "imagenes": [
+            "../imgs/producto/campera_leo/leo1.jpg",
+            "../imgs/producto/campera_leo/leo2.jpg"
+        ],
+        "colores": [
+            "Gris"
+        ]
+    },
+    {
+        "id": 16,
+        "nombre": "Sweater Popis",
+        "descripcion_corta": "Hermoso sweater largo con detalles de ochos en el frente y manga de hilado Bremer",
+        "precio_rebajado": 2340,
+        "precio_normal": 2600,
+        "categorias": "SALE, Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/sweater_popis/popis1.jpg",
+            "../imgs/producto/sweater_popis/popis2.jpg"
+        ],
+        "colores": [
+            "Azul",
+            "Beige",
+            "Coral",
+            "Rojo"
+        ]
+    },
+    {
+        "id": 17,
+        "nombre": "Camisaco - KIM",
+        "descripcion_corta": "Elegante camisaco de tela Plush",
+        "precio_rebajado": null,
+        "precio_normal": 3000,
+        "categorias": "Sacos > Camisacos",
+        "imagenes": [
+            "../imgs/producto/camisaco_kim/kim1.jpg",
+            "../imgs/producto/camisaco_kim/kim2.jpg"
+        ],
+        "colores": [
+            "Black"
+        ]
+    },
+    {
+        "id": 18,
+        "nombre": "Campera FARM",
+        "descripcion_corta": "Campera de gabardina con flecos en V",
+        "precio_rebajado": null,
+        "precio_normal": 6000,
+        "categorias": "Abrigos > Camperas",
+        "imagenes": [
+            "../imgs/producto/campera_farm/farm1.jpg",
+            "../imgs/producto/campera_farm/farm2.jpg"
+        ],
+        "colores": [
+            "Black"
+        ]
+    },
+    {
+        "id": 19,
+        "nombre": "Camisa YELLO",
+        "descripcion_corta": "Camisa amplia y larga denim con roturas adelante y atrás, botones de níquel.",
+        "precio_rebajado": null,
+        "precio_normal": 2600,
+        "categorias": "Camisas",
+        "imagenes": [
+            "../imgs/producto/camisa_yello/yello1.jpg",
+            "../imgs/producto/camisa_yello/yello2.jpg"
+        ],
+        "colores": [
+            "Blue"
+        ]
+    },
+    {
+        "id": 20,
+        "nombre": "Poleron trenzado",
+        "descripcion_corta": "Polerón con detalles de trenzado en el cuello, brazo y atrás. Calidad premium. Bien amplios. Talle único\nMedidas en cm: -Sisa a sisa 64 cm -Largo 80 cm",
+        "precio_rebajado": null,
+        "precio_normal": 2600,
+        "categorias": "Remeras > Poleras, Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/poleron_trenzado/trenzado1.jpg",
+            "../imgs/producto/poleron_trenzado/trenzado2.jpg"
+        ],
+        "colores": [
+            "Verde Militar"
+        ]
+    },
+    {
+        "id": 21,
+        "nombre": "Camisaco SEFORA",
+        "descripcion_corta": "Camisaco de paño con un lazo en la cintura y botones marmolados, tiene dos bolsillos delanteros.",
+        "precio_rebajado": 4050,
+        "precio_normal": 4500,
+        "categorias": "Sacos > Camisacos, SALE",
+        "imagenes": [
+            "../imgs/producto/camisaco_sefora/sefora1.jpg",
+            "../imgs/producto/camisaco_sefora/sefora2.jpg"
+        ],
+        "colores": [
+            "Habanno"
+        ]
+    },
+    {
+        "id": 22,
+        "nombre": "Camisa AGUUS",
+        "descripcion_corta": "Camisa Clasica manga regulable de tela Poplin\nBusto: 102 - Largo: 76 - Manga: 60",
+        "precio_rebajado": null,
+        "precio_normal": 2300,
+        "categorias": "Camisas",
+        "imagenes": [
+            "../imgs/producto/camisa_aguus/aguus1.jpg",
+            "../imgs/producto/camisa_aguus/aguus2.jpg"
+        ],
+        "colores": [
+            "Blanco"
+        ]
+    },
+    {
+        "id": 23,
+        "nombre": "Camisa BELLE EPOQUE",
+        "descripcion_corta": "Camisa de genero poplin con manga largas regulable",
+        "precio_rebajado": null,
+        "precio_normal": 2800,
+        "categorias": "Camisas",
+        "imagenes": [
+            "../imgs/producto/camisa_belle_epoque/epoque1.jpg",
+            "../imgs/producto/camisa_belle_epoque/epoque2.jpg"
+        ],
+        "colores": [
+            "Blanco"
+        ]
+    },
+    {
+        "id": 24,
+        "nombre": "Sweater MARI",
+        "descripcion_corta": "Sweater con detalle de Botones al costado",
+        "precio_rebajado": null,
+        "precio_normal": 3290,
+        "categorias": "Abrigos > Sweaters",
+        "imagenes": [
+            "../imgs/producto/sweater_mari/mari1.jpg",
+            "../imgs/producto/sweater_mari/mari2.jpg"
+        ],
+        "colores": [
+            "Celeste",
+            "Fucsia"
+        ]
+    }
+]
