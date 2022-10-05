@@ -26,28 +26,13 @@ const Producto = () => {
                 productos.map(item => 
                     <section class="main__producto">
                         <article class="producto__imgs">
-                            <div id="producto" class="imgs__imgGrande carousel slide" data-bs-ride="false" data-bs-interval="false">
-                                <div class="carousel-item active">
-                                    <img class="imgs__imgGrande--img" src="../imgs/popis/popis1.jpg" alt="Foto del Producto"/>
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="imgs__imgGrande--img" src="../imgs/popis/popis2.jpg" alt="Foto del Producto"/>
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="imgs__imgGrande--img" src="../imgs/popis/popis3.jpg" alt="Foto del Producto"/>
-                                </div>
-                            </div>
-                            <div class="imgs__restoImgs">
-                                <img data-bs-target="#producto" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1" class="imgs__restoImgs--img active" data-imgs src="../imgs/popis/popis1.jpg" alt="Otras fotos del producto"/>
-                                <img data-bs-target="#producto" data-bs-slide-to="1" aria-current="true" aria-label="Slide 2" class="imgs__restoImgs--img" data-imgs src="../imgs/popis/popis2.jpg" alt="Otras fotos del producto"/>
-                                <img data-bs-target="#producto" data-bs-slide-to="2" aria-current="true" aria-label="Slide 3" class="imgs__restoImgs--img" data-imgs src="../imgs/popis/popis3.jpg" alt="Otras fotos del producto"/>
-                            </div>
+                            <img class="imgs__imgGrande--img" src={item.imagenes[0]} alt="Foto del Producto"/>
                         </article>
                         <div class="producto__info">
                             <nav class="info__nav">
                                 <Link to={"/"} class="nav--link">INICIO</Link>
-                                <Link to={"/tienda/sweaters"} class="nav--link">SWEATERS</Link>
-                                <p class="nav--producto">SWEATER POPIS</p>
+                                <Link to={"/tienda"} class="nav--link">{item.categorias}</Link>
+                                <p class="nav--producto">{item.nombre}</p>
                             </nav>
                             <h1 class="info--title">{item.nombre}</h1>
                             <div class="info__precio">

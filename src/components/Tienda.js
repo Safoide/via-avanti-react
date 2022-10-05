@@ -104,9 +104,7 @@ const Tienda = () => {
                     </div>
                     <ul id="productosUl" class="productos__lista">
                         {
-                            productos.map(item =>
-                                <ProductoItem key={item.id} {...item}/>    
-                            )
+                            productos.map(item => <ProductoItem key={item.id} {...item}/> )
                         }
                     </ul>
                     <div class="productos__bottom">

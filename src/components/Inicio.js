@@ -28,9 +28,7 @@ const Inicio = () => {
                 <article className="content__article">
                     <ul className="article__menu" id="ofertasUl">
                         {
-                            productosDesc.map(item => 
-                                <ProductoItem key={item.id} {...item}/>
-                            )
+                            productosDesc.map(item => <ProductoItem key={item.id} {...item}/> )
                         }
                     </ul>
                 </article>
