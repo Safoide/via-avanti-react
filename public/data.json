@@ -5,7 +5,7 @@
         "descripcion_corta": "Jean crop elastizado recto, largo a los tobillos, con roturas. Composición: 100% algodón",
         "precio_rebajado": 3744,
         "precio_normal": 4160,
-        "Categorías": "SALE, Pantalones",
+        "categorias": "Pantalones",
         "imagenes": [
             "../imgs/producto/jeans_pop/pop1.jpg",
             "../imgs/producto/jeans_pop/pop2.jpg"
@@ -83,7 +83,7 @@
         "descripcion_corta": "Camisa holgada rayada, con botones y bolsillos",
         "precio_rebajado": 1620,
         "precio_normal": 1800,
-        "categorias": "Camisas, SALE",
+        "categorias": "Camisas",
         "imagenes": [
             "../imgs/producto/camisa_canopus/canopus1.jpg",
             "../imgs/producto/camisa_canopus/canopus2.jpg"
@@ -95,7 +95,6 @@
     {
         "id": 7,
         "nombre": "Camisa CLOUDY",
-        "¿Está destacado?": 1,
         "descripcion_corta": "Camisa sastrera oversize con bolsillos delanteros.",
         "precio_rebajado": null,
         "precio_normal": 2500,
@@ -133,7 +132,7 @@
         "descripcion_corta": "Sweater de tela bremer con detalle al frente y costado",
         "precio_rebajado": 2376,
         "precio_normal": 2700,
-        "categorias": "SALE, Abrigos > Sweaters",
+        "categorias": "Abrigos > Sweaters",
         "imagenes": [
             "../imgs/producto/sweater_roma/roma1.jpg",
             "../imgs/producto/sweater_roma/roma2.jpg"
@@ -146,11 +145,10 @@
     {
         "id": 10,
         "nombre": "Pantalon CHICAGO",
-        "¿Está destacado?": 0,
         "descripcion_corta": "Pantalón de piqué de punto, con bolsillos, cartera falsa en delantero y elástico en cintura. Composición: 60% rayón, 40% nylon",
         "precio_rebajado": null,
         "precio_normal": 3280,
-        "Categorías": "Pantalones",
+        "categorias": "Pantalones",
         "imagenes": [
             "../imgs/producto/pantalon_chicago/chicago1.jpg",
             "../imgs/producto/pantalon_chicago/chicago2.jpg"
@@ -184,7 +182,7 @@
         "descripcion_corta": "Campera con piel suave por dentro.\nBolsillos delanteros. Puños en las mangas.\nElástico en la cintura.",
         "precio_rebajado": 5280,
         "precio_normal": 6000,
-        "categorias": "Abrigos > Camperas, SALE",
+        "categorias": "Abrigos > Camperas",
         "imagenes": [
             "../imgs/producto/campera_nero/nero1.jpg",
             "../imgs/producto/campera_nero/nero2.jpg"
@@ -244,7 +242,7 @@
         "descripcion_corta": "Hermoso sweater largo con detalles de ochos en el frente y manga de hilado Bremer",
         "precio_rebajado": 2340,
         "precio_normal": 2600,
-        "categorias": "SALE, Abrigos > Sweaters",
+        "categorias": "Abrigos > Sweaters",
         "imagenes": [
             "../imgs/producto/sweater_popis/popis1.jpg",
             "../imgs/producto/sweater_popis/popis2.jpg"
@@ -307,7 +305,7 @@
         "descripcion_corta": "Polerón con detalles de trenzado en el cuello, brazo y atrás. Calidad premium. Bien amplios. Talle único\nMedidas en cm: -Sisa a sisa 64 cm -Largo 80 cm",
         "precio_rebajado": null,
         "precio_normal": 2600,
-        "categorias": "Remeras > Poleras, Abrigos > Sweaters",
+        "categorias": "Abrigos > Sweaters",
         "imagenes": [
             "../imgs/producto/poleron_trenzado/trenzado1.jpg",
             "../imgs/producto/poleron_trenzado/trenzado2.jpg"
@@ -322,7 +320,7 @@
         "descripcion_corta": "Camisaco de paño con un lazo en la cintura y botones marmolados, tiene dos bolsillos delanteros.",
         "precio_rebajado": 4050,
         "precio_normal": 4500,
-        "categorias": "Sacos > Camisacos, SALE",
+        "categorias": "Sacos > Camisacos",
         "imagenes": [
             "../imgs/producto/camisaco_sefora/sefora1.jpg",
             "../imgs/producto/camisaco_sefora/sefora2.jpg"

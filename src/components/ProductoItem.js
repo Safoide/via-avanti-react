@@ -2,36 +2,36 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const ProductoItem = ( {id, nombre, descripcion_corta, precio_rebajado, precio_normal, categorias, imagenes, colores} ) => {
-    let producto_link = nombre.split(' ').join('-').toLowerCase();
+const ProductoItem = ( props ) => {
+    let producto = props.producto;
+    let producto_link = producto.nombre.split(' ').join('-').toLowerCase();
 
     return (
-        precio_rebajado ? (
-            <ItemList key={id}>
-                <ItemLink to={`/producto/${producto_link}`} className="descuento" data-producto={id}>
-                    <ItemImg className="fimg" src={imagenes[0]} alt={nombre.toUpperCase()}/>
-                    <ItemImg className="simg" src={imagenes[1]} alt={nombre.toUpperCase()} />
-                    <ItemTitle>{nombre.toUpperCase()}</ItemTitle>
-                    <ItemPrecio className="link__precio">
-                        <Precio className="descuento">${precio_normal}</Precio>
-                        <Precio>${precio_rebajado}</Precio>
+        producto.precio_rebajado ? (
+            <ItemList key={producto.id}>
+                <ItemLink to={`/producto/${producto_link}`} className="descuento" data-producto={producto.id}>
+                    <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
+                    <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
+                    <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>
+                    <ItemPrecio>
+                        <Precio className="descuento">${producto.precio_normal}</Precio>
+                        <Precio>${producto.precio_rebajado}</Precio>
                         <PrecioIva>- IVA Incluido</PrecioIva>
                     </ItemPrecio>
-                    <ItemButton data-producto={id}>AÑADIR AL CARRITO</ItemButton>
-
+                    <ItemButton data-producto={producto.id}>AÑADIR AL CARRITO</ItemButton>
                 </ItemLink>
             </ItemList>
         ) : (
-            <ItemList key={id}>
-                <ItemLink to={`/producto/${producto_link}`} data-producto={id}>
-                    <ItemImg className="fimg" src={imagenes[0]} alt={nombre.toUpperCase()}/>
-                    <ItemImg className="simg" src={imagenes[1]} alt={nombre.toUpperCase()} />
-                    <ItemTitle>{nombre.toUpperCase()}</ItemTitle>
-                    <ItemPrecio className="link__precio">
-                        <Precio>${precio_normal}</Precio>
+            <ItemList key={producto.id}>
+                <ItemLink to={`/producto/${producto_link}`} data-producto={producto.id}>
+                    <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
+                    <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
+                    <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>
+                    <ItemPrecio>
+                        <Precio>${producto.precio_normal}</Precio>
                         <PrecioIva>- IVA Incluido</PrecioIva>
                     </ItemPrecio>
-                    <ItemButton data-producto={id}>AÑADIR AL CARRITO</ItemButton>
+                    <ItemButton data-producto={producto.id}>AÑADIR AL CARRITO</ItemButton>
                 </ItemLink>
             </ItemList>
         )

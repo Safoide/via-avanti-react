@@ -1,17 +1,16 @@
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from "react";
-import ProductoItem from './ProductoItem';
+import ProductoItem from '../ProductoItem';
+import styled from 'styled-components';
 
 const Inicio = () => {
     
-    const [productos, setProductos] = useState([]);
     const [productosDesc, setProductosDesc] = useState([]);
 
     const peticionGet = () => {
         axios.get('data.json').then(response=>{
-            setProductos(response.data);
-            setProductosDesc(productos.filter(p => p.precio_rebajado != null));
+            setProductosDesc(response.data.filter(p => p.precio_rebajado != null));
         }).catch(error=>{
             console.log(error.message);
         })
@@ -19,22 +18,31 @@ const Inicio = () => {
 
     useEffect(() => {
         peticionGet();
-    }, [productos])
+    }, [productosDesc])
 
     return (
-        <main className="main">
+        <Main>
             <section className="main__content">
                 <h2 className="content--title">OFERTAS</h2>
                 <article className="content__article">
                     <ul className="article__menu" id="ofertasUl">
                         {
-                            productosDesc.map(item => <ProductoItem key={item.id} {...item}/> )
+                            productosDesc.map(item => <ProductoItem key={item.id} producto={item}/> )
                         }
                     </ul>
                 </article>
             </section>
-        </main>
+        </Main>
     )
 }
 
-export default Inicio
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100vw;
+`;
+
+export default Inicio;
+export { Main };

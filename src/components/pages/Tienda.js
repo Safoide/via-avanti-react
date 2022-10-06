@@ -1,14 +1,22 @@
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from "react";
-import ProductoItem from './ProductoItem';
+import ProductoItem from '../ProductoItem';
+import { Main } from './Inicio';
+import { Link, useParams } from 'react-router-dom';
 
 const Tienda = () => {
+
+    let categoria = useParams();
+    categoria = categoria['*'];
+
     const [productos, setProductos] = useState([]);
+    const [productosByCategory, setProductosByCategory] = useState([]);
 
     const peticionGet = () => {
-        axios.get('data.json').then(response=>{
+        axios.get('../data.json').then(response=>{
             setProductos(response.data);
+            setProductosByCategory(response.data.filter(item => item.categorias.split(' > ')[0].toLowerCase() === categoria))
         }).catch(error=>{
             console.log(error.message);
         })
@@ -19,31 +27,31 @@ const Tienda = () => {
     }, [productos])
 
     return (
-        <main class="main">
+        <Main>
             <section class="main__tienda">
                 <aside class="tienda__filtros">
                     <div class="filtros__categoria">
                         <h4 class="filtros--subtitle">FILTRAR POR CATEGORIA</h4>
                         <div class="categoria__input">
                             <span class="input--title">Pantalones</span>
-                            <div class="input__input">
+                            <Link to={"/tienda/pantalones"} class="input__input">
                                 <input class="input--input" type="checkbox" name="categoria" id="pantalones"/>
-                                <span class="input--count">2</span>
-                            </div>
+                                <span class="input--count">{productos.filter(item => item.categorias.split(' > ')[0].toLowerCase() === 'pantalones').length}</span>
+                            </Link>
                         </div>
                         <div class="categoria__input">
-                            <span class="input--title">Remeras</span>
-                            <div class="input__input">
-                                <input class="input--input" type="checkbox" name="categoria" id="remeras"/>
-                                <span class="input--count">1</span>
-                            </div>
+                            <span class="input--title">Camisas</span>
+                            <Link to={"/tienda/camisas"} class="input__input">
+                                <input class="input--input" type="checkbox" name="categoria" id="camisas"/>
+                                <span class="input--count">{productos.filter(item => item.categorias.split(' > ')[0].toLowerCase() === 'camisas').length}</span>
+                            </Link>
                         </div>
                         <div class="categoria__input">
-                            <span class="input--title">Sweaters</span>
-                            <div class="input__input">
-                                <input class="input--input" type="checkbox" name="categoria" id="sweaters"/>
-                                <span class="input--count">7</span>
-                            </div>
+                            <span class="input--title">Abrigos</span>
+                            <Link to={"/tienda/abrigos"} class="input__input">
+                                <input class="input--input" type="checkbox" name="categoria" id="abrigos"/>
+                                <span class="input--count">{productos.filter(item => item.categorias.split(' > ')[0].toLowerCase() === 'abrigos').length}</span>
+                            </Link>
                         </div>
                     </div>
 
@@ -104,7 +112,10 @@ const Tienda = () => {
                     </div>
                     <ul id="productosUl" class="productos__lista">
                         {
-                            productos.map(item => <ProductoItem key={item.id} {...item}/> )
+                            categoria ? 
+                                productosByCategory.map(item => <ProductoItem key={item.id} producto={item}/> )
+                            :
+                                productos.map(item => <ProductoItem key={item.id} producto={item}/> )
                         }
                     </ul>
                     <div class="productos__bottom">
@@ -114,7 +125,7 @@ const Tienda = () => {
                     </div>
                 </div>
             </section>
-        </main>
+        </Main>
     )
 }
 
