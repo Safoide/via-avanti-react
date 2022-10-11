@@ -1098,9 +1098,9 @@ h5 {
             width: 100%;
             height: 100%;
             opacity: 0; }
-            .main__tienda .tienda__filtros .filtros__categoria .categoria__input .input__input .input--input:checked + .input--count,
-            .main__tienda .tienda__filtros .filtros__color .color__input .input__input .input--input:checked + .input--count,
-            .main__tienda .tienda__filtros .filtros__talle .talle__input .input__input .input--input:checked + .input--count {
+            .main__tienda .tienda__filtros .filtros__categoria .categoria__input .input__input.active .input--input + .input--count,
+            .main__tienda .tienda__filtros .filtros__color .color__input .input__input.active .input--input + .input--count,
+            .main__tienda .tienda__filtros .filtros__talle .talle__input .input__input.active .input--input + .input--count {
               color: #000;
               background: #c9c9c9; }
           .main__tienda .tienda__filtros .filtros__categoria .categoria__input .input__input .input--count,

@@ -1,15 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 const ProductoItem = ( props ) => {
     let producto = props.producto;
     let producto_link = producto.nombre.split(' ').join('-').toLowerCase();
+    
+    const navigate = useNavigate();
+
+    const añadirProducto = (e) => {
+        e.preventDefault();
+        
+        toast.info(`${producto.nombre} fue añadido al carrito!`, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            onClick: () => navigate('/cart')
+        });
+    }
 
     return (
         producto.precio_rebajado ? (
             <ItemList key={producto.id}>
-                <ItemLink to={`/producto/${producto_link}`} className="descuento" data-producto={producto.id}>
+                <ItemLink to={`/producto/${producto_link}`} className="descuento">
                     <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
                     <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
                     <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>
@@ -18,12 +36,12 @@ const ProductoItem = ( props ) => {
                         <Precio>${producto.precio_rebajado}</Precio>
                         <PrecioIva>- IVA Incluido</PrecioIva>
                     </ItemPrecio>
-                    <ItemButton data-producto={producto.id}>AÑADIR AL CARRITO</ItemButton>
+                    <ItemButton onClick={añadirProducto}>AÑADIR AL CARRITO</ItemButton>
                 </ItemLink>
             </ItemList>
         ) : (
             <ItemList key={producto.id}>
-                <ItemLink to={`/producto/${producto_link}`} data-producto={producto.id}>
+                <ItemLink to={`/producto/${producto_link}`}>
                     <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
                     <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
                     <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>
@@ -31,7 +49,7 @@ const ProductoItem = ( props ) => {
                         <Precio>${producto.precio_normal}</Precio>
                         <PrecioIva>- IVA Incluido</PrecioIva>
                     </ItemPrecio>
-                    <ItemButton data-producto={producto.id}>AÑADIR AL CARRITO</ItemButton>
+                    <ItemButton onClick={añadirProducto}>AÑADIR AL CARRITO</ItemButton>
                 </ItemLink>
             </ItemList>
         )

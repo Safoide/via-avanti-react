@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from "react";
 import ProductoItem from '../ProductoItem';
 import { Main } from './Inicio';
-import { Link, useParams } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 
 const Tienda = () => {
 
@@ -12,11 +12,47 @@ const Tienda = () => {
 
     const [productos, setProductos] = useState([]);
     const [productosByCategory, setProductosByCategory] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [sorted, setSorted] = useState('nuevos');
+
+    const itemCategory = (product) => {
+        return product.categorias.split(' > ')[0];
+    }
+    
+    const ordenarHandler = (e) => {
+        setSorted(e.target.value);
+    }
 
     const peticionGet = () => {
         axios.get('../data.json').then(response=>{
-            setProductos(response.data);
-            setProductosByCategory(response.data.filter(item => item.categorias.split(' > ')[0].toLowerCase() === categoria))
+            let sortedArr;
+
+            if(sorted === 'nuevos') {
+                sortedArr = response.data.sort((a, b) => a.id - b.id);
+            } else if(sorted === 'preciomenor') {
+                sortedArr = response.data.sort((a, b) => {
+                    let a_precio = a.precio_rebajado ? a.precio_rebajado : a.precio_normal;
+                    let b_precio = b.precio_rebajado ? b.precio_rebajado : b.precio_normal;
+
+                    return a_precio - b_precio;
+                });
+            } else {
+                sortedArr = response.data.sort((a, b) => {
+                    let a_precio = a.precio_rebajado ? a.precio_rebajado : a.precio_normal;
+                    let b_precio = b.precio_rebajado ? b.precio_rebajado : b.precio_normal;
+
+                    return b_precio - a_precio;
+                });
+            }
+
+            setProductos(sortedArr);
+            setProductosByCategory(sortedArr.filter(item => itemCategory(item).toLowerCase() === categoria));
+
+            let categoriasArr = [];
+            productos.forEach(product => {
+                if(!categoriasArr.includes(itemCategory(product))) categoriasArr.push(itemCategory(product));
+            })
+            setCategories(categoriasArr);
         }).catch(error=>{
             console.log(error.message);
         })
@@ -28,36 +64,26 @@ const Tienda = () => {
 
     return (
         <Main>
-            <section class="main__tienda">
-                <aside class="tienda__filtros">
-                    <div class="filtros__categoria">
-                        <h4 class="filtros--subtitle">FILTRAR POR CATEGORIA</h4>
-                        <div class="categoria__input">
-                            <span class="input--title">Pantalones</span>
-                            <Link to={"/tienda/pantalones"} class="input__input">
-                                <input class="input--input" type="checkbox" name="categoria" id="pantalones"/>
-                                <span class="input--count">{productos.filter(item => item.categorias.split(' > ')[0].toLowerCase() === 'pantalones').length}</span>
-                            </Link>
-                        </div>
-                        <div class="categoria__input">
-                            <span class="input--title">Camisas</span>
-                            <Link to={"/tienda/camisas"} class="input__input">
-                                <input class="input--input" type="checkbox" name="categoria" id="camisas"/>
-                                <span class="input--count">{productos.filter(item => item.categorias.split(' > ')[0].toLowerCase() === 'camisas').length}</span>
-                            </Link>
-                        </div>
-                        <div class="categoria__input">
-                            <span class="input--title">Abrigos</span>
-                            <Link to={"/tienda/abrigos"} class="input__input">
-                                <input class="input--input" type="checkbox" name="categoria" id="abrigos"/>
-                                <span class="input--count">{productos.filter(item => item.categorias.split(' > ')[0].toLowerCase() === 'abrigos').length}</span>
-                            </Link>
-                        </div>
+            <section className="main__tienda">
+                <aside className="tienda__filtros">
+                    <div className="filtros__categoria">
+                        <h4 className="filtros--subtitle">FILTRAR POR CATEGORIA</h4>
+                        {
+                            categories.map(category => 
+                                <div key={category} className="categoria__input">
+                                    <span className="input--title">{category}</span>
+                                    <NavLink to={`/tienda/${category.toLowerCase()}`} className="input__input">
+                                        <input className="input--input" type="checkbox" name="categoria" id={category}/>
+                                        <span className="input--count">{productos.filter(item => itemCategory(item) === category).length}</span>
+                                    </NavLink>
+                                </div>
+                            )
+                        }
                     </div>
 
-                    <div class="filtros__color">
-                        <h4 class="filtros--subtitle">FILTRAR POR COLOR</h4>
-                        <select class="color__select">
+                    {/* <div className="filtros__color">
+                        <h4 className="filtros--subtitle">FILTRAR POR COLOR</h4>
+                        <select className="color__select">
                             <option value>Cualquier Color</option>
                             <option value="coral">Coral</option>
                             <option value="orquidea">Orquidea</option>
@@ -72,45 +98,45 @@ const Tienda = () => {
                         </select>
                     </div>
 
-                    <div class="filtros__talle">
-                        <h4 class="filtros--subtitle">FILTRAR POR TALLE</h4>
-                        <div class="talle__input">
-                            <span class="input--title">Small</span>
-                            <div class="input__input">
-                                <input class="input--input" type="checkbox" name="talle" id="small"/>
-                                <span class="input--count">6</span>
+                    <div className="filtros__talle">
+                        <h4 className="filtros--subtitle">FILTRAR POR TALLE</h4>
+                        <div className="talle__input">
+                            <span className="input--title">Small</span>
+                            <div className="input__input">
+                                <input className="input--input" type="checkbox" name="talle" id="small"/>
+                                <span className="input--count">6</span>
                             </div>
                         </div>
-                        <div class="talle__input">
-                            <span class="input--title">Medium</span>
-                            <div class="input__input">
-                                <input class="input--input" type="checkbox" name="talle" id="medium"/>
-                                <span class="input--count">6</span>
+                        <div className="talle__input">
+                            <span className="input--title">Medium</span>
+                            <div className="input__input">
+                                <input className="input--input" type="checkbox" name="talle" id="medium"/>
+                                <span className="input--count">6</span>
                             </div>
                         </div>
-                        <div class="talle__input">
-                            <span class="input--title">Large</span>
-                            <div class="input__input">
-                                <input class="input--input" type="checkbox" name="talle" id="large"/>
-                                <span class="input--count">6</span>
+                        <div className="talle__input">
+                            <span className="input--title">Large</span>
+                            <div className="input__input">
+                                <input className="input--input" type="checkbox" name="talle" id="large"/>
+                                <span className="input--count">6</span>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </aside>
-                <div class="tienda__productos" id="productosDiv">
-                    <div class="productos__top">
-                        <p class="top--title" id="productsResults"></p>
-                        <select class="top--orden" id="ordenSelect">
-                            <option value="nuevos" selected="selected">Ordenar por nuevos</option>
+                <div className="tienda__productos" id="productosDiv">
+                    <div className="productos__top">
+                        <p className="top--title" id="productsResults"></p>
+                        <select onChange={ordenarHandler} defaultValue={"nuevos"} className="top--orden" id="ordenSelect">
+                            <option value="nuevos">Ordenar por nuevos</option>
                             <option value="preciomenor">Ordenar por precio: bajo a alto</option>
                             <option value="preciomayor">Ordenar por precio: alto a bajo</option>
                         </select>
                     </div>
-                    <div class="productos__agregado" id="productoAgregadoDiv">
-                        <p class="agregado--title" id="productoAgregado"></p>
-                        <a href="./cart.html" class="agregado--carrito">VER CARRITO</a>
+                    <div className="productos__agregado" id="productoAgregadoDiv">
+                        <p className="agregado--title" id="productoAgregado"></p>
+                        <a href="./cart.html" className="agregado--carrito">VER CARRITO</a>
                     </div>
-                    <ul id="productosUl" class="productos__lista">
+                    <ul id="productosUl" className="productos__lista">
                         {
                             categoria ? 
                                 productosByCategory.map(item => <ProductoItem key={item.id} producto={item}/> )
@@ -118,10 +144,10 @@ const Tienda = () => {
                                 productos.map(item => <ProductoItem key={item.id} producto={item}/> )
                         }
                     </ul>
-                    <div class="productos__bottom">
-                        <div class="bottom--linea"></div>
-                        <div class="bottom--cargar" id="circleCargar"></div>
-                        <div class="bottom--linea"></div>
+                    <div className="productos__bottom">
+                        <div className="bottom--linea"></div>
+                        <div className="bottom--cargar" id="circleCargar"></div>
+                        <div className="bottom--linea"></div>
                     </div>
                 </div>
             </section>
@@ -129,4 +155,4 @@ const Tienda = () => {
     )
 }
 
-export default Tienda
+export default Tienda;

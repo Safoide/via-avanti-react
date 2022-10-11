@@ -4,36 +4,150 @@ import logo from '../../imgs/VALogo.png';
 import BurguerMenu from './BurguerMenu';
 import HeaderTop from './HeaderTop';
 import NavBar from './NavBar';
+import styled from 'styled-components';
 
 const Header = () => {
     return (
         <>
             <HeaderTop/>
 
-            <header className="header">
-                <div className="header__burguer" id="burguerToggleDiv">
+            <HeaderEl>
+                <BurguerBtn id="burguerToggleDiv">
                     <i className='bx bx-menu' id="burguerToggle"></i>
-                </div>
+                </BurguerBtn>
                 
-                <NavLink end to={"/"} className="header__logo">
-                    <img className="header__logo--img" src={logo} alt="LOGO VIA AVANTI"/>
-                    <h1 className="header__logo--title">VIA AVANTI</h1>
-                </NavLink>
+                <LogoLink end to={"/"}>
+                    <LogoImg src={logo} alt="LOGO VIA AVANTI"/>
+                    <LogoTitle>VIA AVANTI</LogoTitle>
+                </LogoLink>
 
                 <NavBar/>
 
-                <div className="header__cart">
-                    <NavLink to={"/cart"} className="header__cart__link">
+                <Cart>
+                    <CartLink to={"/cart"}>
                         CARRITO <i className='bx bxs-shopping-bag'></i>
-                        <div className="header__cart__link--linea"></div>
-                    </NavLink>
-                    <span className="header__cart--unidades" id="cartUnidades">1</span>
-                </div>
-            </header>
+                        <CartLinea></CartLinea>
+                    </CartLink>
+                    <CartUnidades id="cartUnidades">1</CartUnidades>
+                </Cart>
+            </HeaderEl>
 
             <BurguerMenu/>
         </>
     )
 }
+
+const HeaderEl = styled.header`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #1a1a1a;
+    position: sticky;
+    top: 0;
+    max-width: 100vw;
+    height: 80px;
+    z-index: 99;
+    gap: 5px;
+    transition: background-color .4s ease 0s;
+`;
+
+const BurguerBtn = styled.div`
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 32px;
+    display: none;
+`;
+
+const LogoLink = styled(NavLink)`
+    max-width: 220px;
+    height: 80px;
+    padding: .5rem .5rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    gap: 10px;
+`;
+
+const LogoImg = styled.img`
+    width: 64px;
+`;
+
+const LogoTitle = styled.h1`
+    font-size: 1.25em;
+    font-weight: 500;
+    line-height: 1;
+`;
+
+const Cart = styled.div`
+    height: 65px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    position: relative;
+`;
+
+const CartLinea = styled.div`
+    height: 3px;
+    background-color: #1e73be;
+    opacity: 0;
+    position: absolute;
+    transition: all .4s ease 0s;
+    left: .5rem;
+    right: 70%;
+`;
+
+const CartLink = styled(NavLink)`
+    text-decoration: none;
+    color: #cacaca;
+    padding: .5rem .5rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all .4s ease 0s;
+    pointer-events: all;
+    cursor: pointer;
+    position: relative;
+    line-height: 1.5;
+
+    &.active,
+    &:hover,
+    &:focus {
+        color: #fff;
+
+        ${CartLinea} {
+            opacity: 1;
+            right: .5rem;
+        }
+    }
+`;
+
+const CartUnidades = styled.span`
+    position: absolute;
+    background-color: #0f700d;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -5px;
+    top: 19%;
+    font-weight: 700;
+    font-size: 12px;
+    opacity: 0;
+    margin: 0;
+    transition: $transition-4s;
+    color: #fff;
+    border: 2px solid #1a1a1a;
+
+    &.show {
+        opacity: 1;
+    }
+`;
 
 export default Header;
