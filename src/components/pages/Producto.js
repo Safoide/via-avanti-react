@@ -1,17 +1,21 @@
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Main } from './Inicio';
+import { useCart } from '../../context/CartContext';
+import { toast } from 'react-toastify';
 
 const Producto = () => {
 
     const { id } = useParams();
-    const [productos, setProductos] = useState([]);
+    const [producto, setProducto] = useState([]);
+
+    const navigate = useNavigate();
 
     const peticionGet = () => {
         axios.get('../data.json').then(response => {
-            setProductos(response.data.filter(i => i.nombre.split(' ').join('-').toLowerCase() === id));
+            setProducto(response.data.filter(i => i.nombre.split(' ').join('-').toLowerCase() === id));
         }).catch(error=>{
             console.log(error.message);
         })
@@ -19,12 +23,31 @@ const Producto = () => {
 
     useEffect(() => {
         peticionGet();
-    }, [productos])
+    }, [producto])
+
+    const {add} = useCart();
+
+    const addToCart = (e) => {
+        e.preventDefault();
+        
+        add(...producto);
+
+        toast.info(`${producto[0].nombre} fue añadido al carrito!`, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            onClick: () => navigate('/cart')
+        });
+    }
 
     return (
         <Main>
             {
-                productos.map(item => 
+                producto.map(item => 
                     <section className="main__producto">
                         <article className="producto__imgs">
                             <img className="imgs__imgGrande--img" src={item.imagenes[0]} alt="Foto del Producto"/>
@@ -51,12 +74,8 @@ const Producto = () => {
 
                             <form className="info__opciones">
                                 <div className="opciones__carrito">
-                                    <div className="carrito__unidades">
-                                        <button type="button" className="carrito__unidades--boton restar" id="restarButton" onclick="RestarUnidad(event)" disabled></button>
-                                        <input className="carrito__unidades--input" onchange="disableButtons(event)" type="number" max="10" min="1" value="1" name="unidades" id="unidades"/>
-                                        <button type="button" className="carrito__unidades--boton sumar" id="sumarButton" onclick="SumarUnidad(event)"></button>
-                                    </div>                 
-                                    <button type="button" className="carrito--boton" onclick="AddToCart()">AÑADIR AL CARRITO</button>
+         
+                                    <button type="button" className="carrito--boton" onClick={addToCart}>AÑADIR AL CARRITO</button>
                                 </div>
                             </form>
                         </div>

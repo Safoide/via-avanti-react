@@ -1,28 +1,10 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ProductoItem = ( props ) => {
     let producto = props.producto;
     let producto_link = producto.nombre.split(' ').join('-').toLowerCase();
-    
-    const navigate = useNavigate();
-
-    const añadirProducto = (e) => {
-        e.preventDefault();
-        
-        toast.info(`${producto.nombre} fue añadido al carrito!`, {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: false,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            onClick: () => navigate('/cart')
-        });
-    }
 
     return (
         producto.precio_rebajado ? (
@@ -36,7 +18,6 @@ const ProductoItem = ( props ) => {
                         <Precio>${producto.precio_rebajado}</Precio>
                         <PrecioIva>- IVA Incluido</PrecioIva>
                     </ItemPrecio>
-                    <ItemButton onClick={añadirProducto}>AÑADIR AL CARRITO</ItemButton>
                 </ItemLink>
             </ItemList>
         ) : (
@@ -49,7 +30,6 @@ const ProductoItem = ( props ) => {
                         <Precio>${producto.precio_normal}</Precio>
                         <PrecioIva>- IVA Incluido</PrecioIva>
                     </ItemPrecio>
-                    <ItemButton onClick={añadirProducto}>AÑADIR AL CARRITO</ItemButton>
                 </ItemLink>
             </ItemList>
         )
@@ -145,6 +125,7 @@ const ItemPrecio = styled.div`
     gap: 5px;
     font-size: 1em;
     pointer-events: none;
+    margin-bottom: 15px;
 `;
 
 const Precio = styled.span`
@@ -163,25 +144,6 @@ const PrecioIva = styled.p`
     color: #000;
     margin: 0;
     font-weight: 500;
-`;
-
-const ItemButton = styled.button`
-    border: 0;
-    border-radius: 5px;
-    background-color: #0f700d;
-    opacity: .5;
-    color: #fff;
-    transition: all .3s ease 0s;
-    font-size: 1em;
-    font-weight: 600;
-    padding: 7px 10px;
-    cursor: pointer;
-    text-align: center;
-    margin-bottom: 10px;
-
-    &:hover {
-        opacity: 1;
-    }
 `;
 
 export default ProductoItem;

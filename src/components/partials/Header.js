@@ -5,8 +5,11 @@ import BurguerMenu from './BurguerMenu';
 import HeaderTop from './HeaderTop';
 import NavBar from './NavBar';
 import styled from 'styled-components';
+import { useCart } from '../../context/CartContext';
 
 const Header = () => {
+    const {cartItems} = useCart();
+
     return (
         <>
             <HeaderTop/>
@@ -28,7 +31,11 @@ const Header = () => {
                         CARRITO <i className='bx bxs-shopping-bag'></i>
                         <CartLinea></CartLinea>
                     </CartLink>
-                    <CartUnidades id="cartUnidades">1</CartUnidades>
+                    {
+                        cartItems.length !== 0 ?
+                            <CartUnidades id="cartUnidades">{cartItems.length}</CartUnidades>
+                        : <></>
+                    }
                 </Cart>
             </HeaderEl>
 
@@ -139,15 +146,11 @@ const CartUnidades = styled.span`
     top: 19%;
     font-weight: 700;
     font-size: 12px;
-    opacity: 0;
+    opacity: 1;
     margin: 0;
     transition: $transition-4s;
     color: #fff;
     border: 2px solid #1a1a1a;
-
-    &.show {
-        opacity: 1;
-    }
 `;
 
 export default Header;

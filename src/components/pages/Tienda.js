@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useEffect, useState } from "react";
 import ProductoItem from '../ProductoItem';
 import { Main } from './Inicio';
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
+import { addDoc, collection, getDocs, getFirestore, query } from 'firebase/firestore';
 
 const Tienda = () => {
 
@@ -13,57 +14,76 @@ const Tienda = () => {
     const [productos, setProductos] = useState([]);
     const [productosByCategory, setProductosByCategory] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [sorted, setSorted] = useState('nuevos');
+    const [colors, setColors] = useState([]);
 
-    const itemCategory = (product) => {
-        return product.categorias.split(' > ')[0];
-    }
+    const itemCategory = (product) => ( product.categorias.split(' > ')[0] )
+    
+    const onDiscount = (item) => ( item.precio_rebajado ? item.precio_rebajado : item.precio_normal );
     
     const ordenarHandler = (e) => {
-        setSorted(e.target.value);
+        let sorted = e.target.value;
+
+        let sortedArr;
+
+        if(sorted === 'nuevos') {
+            sortedArr = productos.sort((a, b) => a.id - b.id);
+        } else if(sorted === 'preciomenor') {
+            sortedArr = productos.sort((a, b) => onDiscount(a) - onDiscount(b));
+        } else {
+            sortedArr = productos.sort((a, b) => onDiscount(b) - onDiscount(a));
+        }
+
+        setProductos(sortedArr);
+        setProductosByCategory(sortedArr.filter(item => itemCategory(item).toLowerCase() === categoria));
     }
 
-    const peticionGet = () => {
-        axios.get('../data.json').then(response=>{
-            let sortedArr;
+    const peticionGet = async () => {
 
-            if(sorted === 'nuevos') {
-                sortedArr = response.data.sort((a, b) => a.id - b.id);
-            } else if(sorted === 'preciomenor') {
-                sortedArr = response.data.sort((a, b) => {
-                    let a_precio = a.precio_rebajado ? a.precio_rebajado : a.precio_normal;
-                    let b_precio = b.precio_rebajado ? b.precio_rebajado : b.precio_normal;
+        const response = await axios.get('../data.json');
 
-                    return a_precio - b_precio;
-                });
-            } else {
-                sortedArr = response.data.sort((a, b) => {
-                    let a_precio = a.precio_rebajado ? a.precio_rebajado : a.precio_normal;
-                    let b_precio = b.precio_rebajado ? b.precio_rebajado : b.precio_normal;
+        setProductos(response.data);
+        setProductosByCategory(response.data.filter(item => itemCategory(item).toLowerCase() === categoria));
 
-                    return b_precio - a_precio;
-                });
+        let categoriasArr = [];
+        let colorsArr = [];
+
+        response.data.forEach(item => {
+            if(!categoriasArr.includes(itemCategory(item))) categoriasArr.push(itemCategory(item));
+
+            for(let i = 0; i < item.colores.length; i++) {
+                if(!colorsArr.includes(item.colores[i])) colorsArr.push(item.colores[i]);
             }
-
-            setProductos(sortedArr);
-            setProductosByCategory(sortedArr.filter(item => itemCategory(item).toLowerCase() === categoria));
-
-            let categoriasArr = [];
-            productos.forEach(product => {
-                if(!categoriasArr.includes(itemCategory(product))) categoriasArr.push(itemCategory(product));
-            })
-            setCategories(categoriasArr);
-        }).catch(error=>{
-            console.log(error.message);
         })
+
+        setCategories(categoriasArr);
+        setColors(colorsArr);
+
+        console.log('hola')
     }
 
     useEffect(() => {
         peticionGet();
-    }, [productos])
+    }, [setProductos])
+
+    const addProducts = (e) => {
+        e.preventDefault();
+
+        const db = getFirestore();
+        const productsCollection = collection(db, "products");
+
+        productos.forEach(item => {
+            const itemObj = {
+                ...item,
+                tag: item.nombre.split(' ').join('-').toLowerCase()
+            }
+            addDoc(productsCollection, itemObj);
+        })
+
+    }
 
     return (
         <Main>
+            <button onClick={addProducts}></button>
             <section className="main__tienda">
                 <aside className="tienda__filtros">
                     <div className="filtros__categoria">
@@ -81,24 +101,19 @@ const Tienda = () => {
                         }
                     </div>
 
-                    {/* <div className="filtros__color">
+                    <div className="filtros__color">
                         <h4 className="filtros--subtitle">FILTRAR POR COLOR</h4>
                         <select className="color__select">
                             <option value>Cualquier Color</option>
-                            <option value="coral">Coral</option>
-                            <option value="orquidea">Orquidea</option>
-                            <option value="celeste">Celeste</option>
-                            <option value="beige">Beige</option>
-                            <option value="mostaza">Mostaza</option>
-                            <option value="camel">Camel</option>
-                            <option value="grismelange">Gris Melange</option>
-                            <option value="negro">Negro</option>
-                            <option value="crudo">Crudo</option>
-                            <option value="fucsia">Fucsia</option>
+                            {
+                                colors.map(color => 
+                                    <option key={color} value={color.toLowerCase()}>{color}</option>
+                                )
+                            }
                         </select>
                     </div>
 
-                    <div className="filtros__talle">
+                    {/* <div className="filtros__talle">
                         <h4 className="filtros--subtitle">FILTRAR POR TALLE</h4>
                         <div className="talle__input">
                             <span className="input--title">Small</span>
@@ -131,10 +146,6 @@ const Tienda = () => {
                             <option value="preciomenor">Ordenar por precio: bajo a alto</option>
                             <option value="preciomayor">Ordenar por precio: alto a bajo</option>
                         </select>
-                    </div>
-                    <div className="productos__agregado" id="productoAgregadoDiv">
-                        <p className="agregado--title" id="productoAgregado"></p>
-                        <a href="./cart.html" className="agregado--carrito">VER CARRITO</a>
                     </div>
                     <ul id="productosUl" className="productos__lista">
                         {
