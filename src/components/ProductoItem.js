@@ -9,7 +9,7 @@ const ProductoItem = ( props ) => {
     return (
         producto.precio_rebajado ? (
             <ItemList key={producto.id}>
-                <ItemLink to={`/producto/${producto_link}`} className="descuento">
+                <ItemLink to={`/producto/${producto.docId}`} className="descuento">
                     <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
                     <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
                     <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>
@@ -22,7 +22,7 @@ const ProductoItem = ( props ) => {
             </ItemList>
         ) : (
             <ItemList key={producto.id}>
-                <ItemLink to={`/producto/${producto_link}`}>
+                <ItemLink to={`/producto/${producto.docId}`}>
                     <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
                     <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
                     <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>

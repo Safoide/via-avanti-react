@@ -1,10 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import { useEffect, useState } from "react";
 import ProductoItem from '../ProductoItem';
 import { Main } from './Inicio';
 import { NavLink, useParams } from 'react-router-dom';
-import { addDoc, collection, getDocs, getFirestore, query } from 'firebase/firestore';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 
 const Tienda = () => {
 
@@ -37,53 +36,46 @@ const Tienda = () => {
         setProductosByCategory(sortedArr.filter(item => itemCategory(item).toLowerCase() === categoria));
     }
 
-    const peticionGet = async () => {
-
-        const response = await axios.get('../data.json');
-
-        setProductos(response.data);
-        setProductosByCategory(response.data.filter(item => itemCategory(item).toLowerCase() === categoria));
-
-        let categoriasArr = [];
-        let colorsArr = [];
-
-        response.data.forEach(item => {
-            if(!categoriasArr.includes(itemCategory(item))) categoriasArr.push(itemCategory(item));
-
-            for(let i = 0; i < item.colores.length; i++) {
-                if(!colorsArr.includes(item.colores[i])) colorsArr.push(item.colores[i]);
-            }
-        })
-
-        setCategories(categoriasArr);
-        setColors(colorsArr);
-
-        console.log('hola')
-    }
-
-    useEffect(() => {
-        peticionGet();
-    }, [setProductos])
-
-    const addProducts = (e) => {
-        e.preventDefault();
+    const peticionGet = () => {
 
         const db = getFirestore();
         const productsCollection = collection(db, "products");
 
-        productos.forEach(item => {
-            const itemObj = {
-                ...item,
-                tag: item.nombre.split(' ').join('-').toLowerCase()
-            }
-            addDoc(productsCollection, itemObj);
-        })
+        getDocs( productsCollection ).then( response => {
+            const productsData = response.docs.map( doc => ({docId: doc.id, ...doc.data()}));
 
+            setProductos(productsData);
+            setProductosByCategory(productsData.filter(item => itemCategory(item).toLowerCase() === categoria));
+           
+            let categoriasArr = [];
+            let colorsArr = [];
+
+            productsData.forEach(item => {
+                if(!categoriasArr.includes(itemCategory(item))) categoriasArr.push(itemCategory(item));
+
+                for(let i = 0; i < item.colores.length; i++) {
+                    if(!colorsArr.includes(item.colores[i])) colorsArr.push(item.colores[i]);
+                }
+            })
+
+            setCategories(categoriasArr);
+            setColors(colorsArr);
+        })
     }
+
+    const categoryHandler = () => {
+        
+        setProductosByCategory(productos.filter(item => itemCategory(item).toLowerCase() === categoria));
+
+        console.log(categoria)
+    }
+
+    useEffect(() => {
+        peticionGet();
+    }, [])
 
     return (
         <Main>
-            <button onClick={addProducts}></button>
             <section className="main__tienda">
                 <aside className="tienda__filtros">
                     <div className="filtros__categoria">
@@ -92,7 +84,7 @@ const Tienda = () => {
                             categories.map(category => 
                                 <div key={category} className="categoria__input">
                                     <span className="input--title">{category}</span>
-                                    <NavLink to={`/tienda/${category.toLowerCase()}`} className="input__input">
+                                    <NavLink to={`/tienda/${category.toLowerCase()}`} onClick={categoryHandler} className="input__input">
                                         <input className="input--input" type="checkbox" name="categoria" id={category}/>
                                         <span className="input--count">{productos.filter(item => itemCategory(item) === category).length}</span>
                                     </NavLink>

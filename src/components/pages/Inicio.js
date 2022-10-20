@@ -5,22 +5,27 @@ import ProductoItem from '../ProductoItem';
 import styled from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
+import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 
 const Inicio = () => {
     
     const [productosDesc, setProductosDesc] = useState([]);
 
     const peticionGet = () => {
-        axios.get('data.json').then(response=>{
-            setProductosDesc(response.data.filter(p => p.precio_rebajado != null));
-        }).catch(error=>{
-            console.log(error.message);
+
+        const db = getFirestore();
+        const productsQuery = query(collection(db, "products"), where("precio_rebajado", "!=", null));
+
+        getDocs(productsQuery).then(response => {
+            const productsData = response.docs.map( doc => ({docId: doc.id, ...doc.data()}));
+
+            setProductosDesc(productsData);
         })
     }
 
     useEffect(() => {
         peticionGet();
-    }, [productosDesc])
+    }, [])
 
     return (
         <Main>
