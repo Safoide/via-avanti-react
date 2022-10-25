@@ -1,17 +1,15 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ProductoItem = ( props ) => {
     let producto = props.producto;
-    let producto_link = producto.nombre.split(' ').join('-').toLowerCase();
 
     return (
-        producto.precio_rebajado ? (
+        producto.precio_rebajado ?
             <ItemList key={producto.id}>
-                <ItemLink to={`/producto/${producto.docId}`} className="descuento">
-                    <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
-                    <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
+                <ItemLink to={`/producto/${producto.tag}`} className="descuento">
+                    <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre}/>
+                    <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre} />
                     <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>
                     <ItemPrecio>
                         <Precio className="descuento">${producto.precio_normal}</Precio>
@@ -20,11 +18,11 @@ const ProductoItem = ( props ) => {
                     </ItemPrecio>
                 </ItemLink>
             </ItemList>
-        ) : (
+        :
             <ItemList key={producto.id}>
-                <ItemLink to={`/producto/${producto.docId}`}>
-                    <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre.toUpperCase()}/>
-                    <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre.toUpperCase()} />
+                <ItemLink to={`/producto/${producto.tag}`}>
+                    <ItemImg className="fimg" src={producto.imagenes[0]} alt={producto.nombre}/>
+                    <ItemImg className="simg" src={producto.imagenes[1]} alt={producto.nombre}/>
                     <ItemTitle>{producto.nombre.toUpperCase()}</ItemTitle>
                     <ItemPrecio>
                         <Precio>${producto.precio_normal}</Precio>
@@ -32,7 +30,6 @@ const ProductoItem = ( props ) => {
                     </ItemPrecio>
                 </ItemLink>
             </ItemList>
-        )
     )
 }
 

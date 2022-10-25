@@ -1,6 +1,12 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
+import useLocalStorage from "../hooks/useLocalStorage";
 
-const cartContext = createContext([]);
+const cartContext = createContext({
+    cartItems: [],
+    add: () => {},
+    remove: () => {},
+    count: 0
+});
 
 const useCart = () => {
     return useContext(cartContext);
@@ -8,7 +14,7 @@ const useCart = () => {
 
 const CartProvider = ( {children} ) => {
     
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useLocalStorage('cartItems', []);
 
     const add = (item) => {
         if(!cartItems.find(cartItem => cartItem.id === item.id)) {
@@ -21,7 +27,7 @@ const CartProvider = ( {children} ) => {
  
         } else {
             const actualizarCantidad = cartItems.map(obj => {
-                if (obj.id === item.id) {
+                if (obj.docId === item.docId) {
                     return {
                         ...obj,
                         cantidad: obj.cantidad + 1
@@ -36,13 +42,14 @@ const CartProvider = ( {children} ) => {
     }
 
     const remove = (item) => {
-        setCartItems( items => items.filter(cartItem => cartItem.id !== item.id) )
+        setCartItems( items => items.filter(cartItem => cartItem.docId !== item.docId) )
     }
     
     const context = {
         cartItems,
         add,
-        remove
+        remove,
+        count: cartItems.length
     };
 
     return (

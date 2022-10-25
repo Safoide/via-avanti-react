@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../imgs/VALogo.png';
 import BurguerMenu from './BurguerMenu';
@@ -8,7 +7,7 @@ import styled from 'styled-components';
 import { useCart } from '../../context/CartContext';
 
 const Header = () => {
-    const {cartItems} = useCart();
+    const {count} = useCart();
 
     return (
         <>
@@ -32,9 +31,8 @@ const Header = () => {
                         <CartLinea></CartLinea>
                     </CartLink>
                     {
-                        cartItems.length !== 0 ?
-                            <CartUnidades id="cartUnidades">{cartItems.length}</CartUnidades>
-                        : <></>
+                        count !== 0 &&
+                            <CartUnidades id="cartUnidades">{count}</CartUnidades>
                     }
                 </Cart>
             </HeaderEl>

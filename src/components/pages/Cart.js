@@ -47,7 +47,7 @@ const Cart = () => {
                     <tbody class="table__body" id="tableBody">
                         {
                             cartItems.map(item =>
-                                <tr className="body__row">
+                                <tr key={item.docId} className="body__row">
                                     <th class="row__item">
                                         <div class="item__productoInfo">
                                             <i onClick={() => removeFromCart(item)} class='bx bxs-x-circle'></i>
