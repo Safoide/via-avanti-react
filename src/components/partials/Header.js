@@ -31,8 +31,7 @@ const Header = () => {
                         <CartLinea></CartLinea>
                     </CartLink>
                     {
-                        count !== 0 &&
-                            <CartUnidades id="cartUnidades">{count}</CartUnidades>
+                        count !== 0 && <CartUnidades id="cartUnidades">{count}</CartUnidades>
                     }
                 </Cart>
             </HeaderEl>
@@ -77,6 +76,10 @@ const LogoLink = styled(NavLink)`
     color: #fff;
     cursor: pointer;
     gap: 10px;
+
+    &:hover {
+        color: #fff;
+    }
 `;
 
 const LogoImg = styled.img`

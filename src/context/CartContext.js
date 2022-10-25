@@ -28,6 +28,11 @@ const CartProvider = ( {children} ) => {
         } else {
             const actualizarCantidad = cartItems.map(obj => {
                 if (obj.docId === item.docId) {
+                    if(obj.cantidad >= 10) return {
+                        ...obj,
+                        cantidad: 10
+                    }
+                    
                     return {
                         ...obj,
                         cantidad: obj.cantidad + 1
@@ -46,9 +51,10 @@ const CartProvider = ( {children} ) => {
     }
     
     const context = {
-        cartItems,
-        add,
-        remove,
+        cartItems: cartItems,
+        setCartItems: setCartItems,
+        add: add,
+        remove: remove,
         count: cartItems.length
     };
 
