@@ -5,6 +5,7 @@ import { useCart } from '../../context/CartContext';
 import { toast } from 'react-toastify';
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import styled from 'styled-components';
+import { Oval } from 'react-loader-spinner';
 
 const Producto = () => {
 
@@ -63,7 +64,16 @@ const Producto = () => {
         <Main>
             {
                 loading ?
-                    <h1>CARGANDO...</h1>
+                    <Oval
+                    height={80}
+                    width={80}
+                    color="#3498db"
+                    wrapperStyle={{ margin: '100px 0' }}
+                    visible={true}
+                    ariaLabel='Cargando...'
+                    secondaryColor="#f3f3f3"
+                    strokeWidth={3}
+                    strokeWidthSecondary={3}/>
                 :
                     <ProductSection key={producto.id}>
                         <ProductImages>
@@ -104,6 +114,10 @@ const ProductSection = styled.section`
     min-width: 58.5%;
     max-width: 1140px;
     display: flex;
+
+    @media only screen and (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 const ProductImages = styled.div`
@@ -113,12 +127,22 @@ const ProductImages = styled.div`
     img {
         width: 100%;
     }
+
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const ProductInfo = styled.div`
     padding: 0 20px;
     width: 56.3%;
     min-width: 50%;
+
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+        margin-top: 20px;
+        padding: 0;
+    }
 `;
 
 const InfoNav = styled.nav`
@@ -217,7 +241,7 @@ const ProductBtn = styled.button`
     background-color: #0f700d;
     opacity: .5;
     color: #fff;
-    transition: $transition-4s;
+    transition: all .4s ease 0s;
     font-size: 16px;
     font-weight: 600;
     padding: 0;

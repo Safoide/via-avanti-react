@@ -50,19 +50,8 @@ const Contacto = () => {
 
     return (
         <Main>
-            {/* <div class="main__formMessage" id="formMessage">
-                <i class='bx bxs-check-circle'></i>
-                <h3 class="formMessage--title" id="formMessageText">
-                    Mensaje enviado con exito,<br/>
-                    en aproximadamente 15 minutos te responderemos!
-                </h3>
-                <a href="./index.html" class="formMessage--link">VOLVER AL INICIO</a>
-            </div> */}
-
-
             <ContactoSection>
                 <ContactoTitle>Envianos tu consulta o comentario.</ContactoTitle>
-
                 <ContactoForm ref={form} onSubmit={sendEmail}>
                     <FormInputs>
                         <InputsContainer >
@@ -81,8 +70,8 @@ const Contacto = () => {
                             <InputText name="user_message" placeholder="Dejanos tu mensaje..." required></InputText>
                         </InputsContainer>
                     </FormInputs>
-                    <FormBtnContainer class="formulario__botones">
-                        <FormBtn class="formulario__botones--boton enviar" type="submit">Enviar Formulario</FormBtn>
+                    <FormBtnContainer>
+                        <FormBtn type="submit">Enviar Formulario</FormBtn>
                     </FormBtnContainer>
                 </ContactoForm>
             </ContactoSection>

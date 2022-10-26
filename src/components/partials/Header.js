@@ -22,8 +22,8 @@ const Header = () => {
 
             <HeaderEl>
                 <BurguerBtn onClick={burguerHandler} className="hamburger hamburger--squeeze" type="button">
-                    <span class="hamburger-box">
-                        <span class="hamburger-inner"></span>
+                    <span className="hamburger-box">
+                        <span className="hamburger-inner"></span>
                     </span>
                 </BurguerBtn>
                 
@@ -161,10 +161,9 @@ const CartUnidades = styled.span`
     right: -5px;
     top: 19%;
     font-weight: 700;
-    font-size: 12px;
     opacity: 1;
     margin: 0;
-    transition: $transition-4s;
+    transition: all .4s ease 0s;
     color: #fff;
     border: 2px solid #1a1a1a;
 `;

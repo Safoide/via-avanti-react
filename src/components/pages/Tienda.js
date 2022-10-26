@@ -5,6 +5,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import Slider from '@material-ui/core/Slider';
 import styled from 'styled-components';
+import { Oval } from "react-loader-spinner";
 
 const Tienda = () => {
 
@@ -100,15 +101,27 @@ const Tienda = () => {
                     <FiltrosCategoria>
                         <FiltrosSubtitle>FILTRAR POR CATEGORIA</FiltrosSubtitle>
                         {
-                            categories.map(category => 
-                                <InputContainer key={category}>
-                                    <InputTitle>{category}</InputTitle>
-                                    <InputLink to={`/tienda/${category.toLowerCase()}`} className="input">
-                                        <FiltrosInput type="checkbox" name="categoria" id={category}/>
-                                        <InputCount>{productos.filter(item => itemCategory(item) === category).length}</InputCount>
-                                    </InputLink>
-                                </InputContainer>
-                            )
+                           loading ? 
+                                <Oval
+                                height={40}
+                                width={40}
+                                color="#3498db"
+                                wrapperStyle={{ margin: '100px 0' }}
+                                visible={true}
+                                ariaLabel='Cargando...'
+                                secondaryColor="#f3f3f3"
+                                strokeWidth={3}
+                                strokeWidthSecondary={3}/>
+                            :
+                                categories.map(category => 
+                                    <InputContainer key={category}>
+                                        <InputTitle>{category}</InputTitle>
+                                        <InputLink to={`/tienda/${category.toLowerCase()}`} className="input">
+                                            <FiltrosInput type="checkbox" name="categoria" id={category}/>
+                                            <InputCount>{productos.filter(item => itemCategory(item) === category).length}</InputCount>
+                                        </InputLink>
+                                    </InputContainer>
+                                )
                         }
                     </FiltrosCategoria>
                     <FiltrosCategoria>
@@ -129,7 +142,16 @@ const Tienda = () => {
                         {
                             isArrayEmpty(productosByCategory) ?
                                 loading ? 
-                                    <h1 style={{ gridColumnEnd: 'span 4', textAlign: 'center' }}>CARGANDO...</h1>
+                                    <Oval
+                                    height={80}
+                                    width={80}
+                                    color="#3498db"
+                                    wrapperStyle={{ gridColumnEnd: 'span 4', justifySelf: 'center', margin: '100px' }}
+                                    visible={true}
+                                    ariaLabel='Cargando...'
+                                    secondaryColor="#f3f3f3"
+                                    strokeWidth={3}
+                                    strokeWidthSecondary={3}/>
                                 :
                                     <h1 style={{ gridColumnEnd: 'span 4', textAlign: 'center' }}>NO SE ENCONTRARON PRODUCTOS</h1>
                             :
@@ -150,6 +172,10 @@ const SectionTienda = styled.section`
     padding: 10px 50px;
     width: 100%;
     justify-content: space-between;
+
+    @media only screen and (max-width: 1600px) {
+        padding: 10px;
+    }
 `;
 
 const FiltrosTienda = styled.aside`
@@ -164,6 +190,10 @@ const FiltrosTienda = styled.aside`
     gap: 32px;
     position: sticky;
     top: 90px;
+
+    @media only screen and (max-height: 680px) {
+        position: static;
+    }
 `;
 
 const FiltrosSubtitle = styled.h4`
@@ -250,6 +280,22 @@ const ProductosTienda = styled.div`
     align-items: center;
     font-size: 16px;
     position: relative;
+
+    @media only screen and (min-width: 1281px) and (max-width: 1440px) {
+        font-size: 14px;
+    }
+
+    @media only screen and (min-width: 901px) and (max-width: 1280px) {
+        font-size: 13px;
+    }
+
+    @media only screen and (max-width: 900px) {
+        font-size: 12px;
+    }
+
+    @media only screen and (max-width: 1440px) {
+        padding: 10px;
+    }
 `;
 
 const ProductosTop = styled.div`
@@ -271,7 +317,6 @@ const ProductosSelect = styled.select`
     color: #000;
     transition: all 0.4s ease 0s;
     font-size: 0.8em;
-    max-width: 50%;
 
     &:focus {
         outline: none;
@@ -289,6 +334,18 @@ const ProductosLista = styled.ul`
     gap: 15px;
     justify-content: center;
     align-items: center;
+
+    @media only screen and (min-width: 901px) and (max-width: 1440px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media only screen and (min-width: 631px) and (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media only screen and (max-width: 630px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 const ProductosBottom = styled.div`

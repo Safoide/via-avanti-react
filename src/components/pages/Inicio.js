@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
+import { Oval } from "react-loader-spinner";
 
 const Inicio = () => {
     
     const [productosDesc, setProductosDesc] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const peticionGet = () => {
 
@@ -18,6 +20,7 @@ const Inicio = () => {
             const productsData = response.docs.map( doc => ({docId: doc.id, ...doc.data()}));
 
             setProductosDesc(productsData);
+            setLoading(false);
         })
     }
 
@@ -52,25 +55,33 @@ const Inicio = () => {
             </MyCarousel>
             <InicioSection>
                 <SectionTitle>OFERTAS</SectionTitle>
-                <SectionArticle>
-                    <SectionList>
-                        {
-                            productosDesc.map(item => <ProductoItem key={item.id} producto={item}/> )
-                        }
-                    </SectionList>
-                </SectionArticle>
+                {
+                    loading ?
+                        <>
+                            <Oval
+                                height={80}
+                                width={80}
+                                color="#3498db"
+                                wrapperStyle={{marginTop: '10px'}}
+                                visible={true}
+                                ariaLabel='Cargando...'
+                                secondaryColor="#f3f3f3"
+                                strokeWidth={3}
+                                strokeWidthSecondary={3}/>
+                        </>
+                    :
+                        <SectionArticle>
+                            <SectionList>
+                                {
+                                    productosDesc.map(item => <ProductoItem key={item.id} producto={item}/> )
+                                }
+                            </SectionList>
+                        </SectionArticle>
+                }
             </InicioSection>
         </Main>
     )
 }
-
-const Main = styled.main`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 100vw;
-`;
 
 const MyCarousel = styled(Carousel)`
     width: 100%;
@@ -136,6 +147,16 @@ const CaptionLink = styled(Link)`
     }
 `;
 
+
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100vw;
+`;
+
+
 const InicioSection = styled.section`
     display: flex;
     align-items: center;
@@ -145,6 +166,12 @@ const InicioSection = styled.section`
     width: 100%;
     max-width: 100vw;
     gap: 20px;
+
+    @media only screen and (max-width: 1600px) {
+        padding: 40px 100px;
+        justify-content: flex-start;
+        max-width: 1200px;
+    }
 `;
 
 const SectionTitle = styled.h2`
@@ -157,6 +184,18 @@ const SectionArticle = styled.article`
     align-items: center;
     justify-content: center;
     font-size: 16px;
+
+    @media only screen and (min-width: 1281px) and (max-width: 1440px) {
+        font-size: 14px;
+    }
+
+    @media only screen and (min-width: 631px) and (max-width: 1281px) {
+        font-size: 13px;
+    }
+
+    @media only screen and (max-width: 630px) {
+        font-size: 12px;
+    }
 `;
 
 const SectionList = styled.ul`
@@ -170,6 +209,18 @@ const SectionList = styled.ul`
     height: 100%;
     justify-content: center;
     align-items: center;
+
+    @media only screen and (min-width: 901px) and (max-width: 1600px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media only screen and (min-width: 631px) and (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media only screen and (max-width: 630px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 export default Inicio;

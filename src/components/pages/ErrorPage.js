@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 const ErrorPage = () => {
     return (
         <Main>
-            <ErrorSection class="main__content error">
-                <ErrorEmote class='content--emote bx bx-error-circle'></ErrorEmote>
-                <ErrorTitle class="content--title">Lamentablemente no pudimos encontrar esa página.</ErrorTitle>
-                <ErrorLink class="content--linkHome" to="/">INICIO</ErrorLink>
+            <ErrorSection className="main__content error">
+                <ErrorEmote className='content--emote bx bx-error-circle'></ErrorEmote>
+                <ErrorTitle className="content--title">Lamentablemente no pudimos encontrar esa página.</ErrorTitle>
+                <ErrorLink className="content--linkHome" to="/">INICIO</ErrorLink>
             </ErrorSection>
         </Main>
     )

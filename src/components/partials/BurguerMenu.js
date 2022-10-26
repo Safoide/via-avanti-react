@@ -100,7 +100,7 @@ const BurguerLink = styled(Link)`
     font-size: 1rem;
     font-weight: 600;
     padding: 10px 0;
-    transition: $transition-4s;
+    transition: all .4s ease 0s;
     width: 100%;
     pointer-events: all;
 
