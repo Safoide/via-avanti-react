@@ -161,6 +161,7 @@ const CartUnidades = styled.span`
     right: -5px;
     top: 19%;
     font-weight: 700;
+    font-size: max(10px, .5vw);
     opacity: 1;
     margin: 0;
     transition: all .4s ease 0s;
