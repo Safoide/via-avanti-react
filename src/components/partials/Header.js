@@ -5,21 +5,30 @@ import HeaderTop from './HeaderTop';
 import NavBar from './NavBar';
 import styled from 'styled-components';
 import { useCart } from '../../context/CartContext';
+import { toggleMenu } from './BurguerMenu';
 
 const Header = () => {
     const {count} = useCart();
+
+    const burguerHandler = (event) => {
+        event.target.classList.toggle('is-active');
+
+        toggleMenu();
+    }
 
     return (
         <>
             <HeaderTop/>
 
             <HeaderEl>
-                <BurguerBtn id="burguerToggleDiv">
-                    <i className='bx bx-menu' id="burguerToggle"></i>
+                <BurguerBtn onClick={burguerHandler} className="hamburger hamburger--squeeze" type="button">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
                 </BurguerBtn>
                 
                 <LogoLink end to={"/"}>
-                    <LogoImg src={logo} alt="LOGO VIA AVANTI"/>
+                    <img src={logo} alt="LOGO VIA AVANTI"/>
                     <LogoTitle>VIA AVANTI</LogoTitle>
                 </LogoLink>
 
@@ -55,14 +64,16 @@ const HeaderEl = styled.header`
     transition: background-color .4s ease 0s;
 `;
 
-const BurguerBtn = styled.div`
-    width: 40px;
-    height: 40px;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 32px;
+const BurguerBtn = styled.button`
     display: none;
+
+    span {
+        pointer-events: none;
+    }
+
+    @media only screen and (max-width: 768px) {
+        display: flex;
+    }
 `;
 
 const LogoLink = styled(NavLink)`
@@ -80,16 +91,20 @@ const LogoLink = styled(NavLink)`
     &:hover {
         color: #fff;
     }
-`;
 
-const LogoImg = styled.img`
-    width: 64px;
+    img {
+        width: 64px;
+    }
 `;
 
 const LogoTitle = styled.h1`
     font-size: 1.25em;
     font-weight: 500;
     line-height: 1;
+
+    @media only screen and (max-width: 768px) {
+        font-size: 15px;
+    }
 `;
 
 const Cart = styled.div`

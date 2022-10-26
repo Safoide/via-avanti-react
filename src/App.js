@@ -6,6 +6,7 @@ import Inicio from "./components/pages/Inicio";
 import Tienda from "./components/pages/Tienda";
 import Producto from './components/pages/Producto';
 import Cart from './components/pages/Cart';
+import Contacto from './components/pages/Contacto';
 import ErrorPage from "./components/pages/ErrorPage";
 import { ToastContainer } from 'react-toastify';
 import {CartProvider} from './context/CartContext';
@@ -21,6 +22,7 @@ function App() {
                     <Route path='/tienda/:categoria' element={<Tienda />} />
                     <Route path='/producto/:id' element={<Producto />} />
                     <Route path='/cart' element={<Cart />} />
+                    <Route path='/contacto' element={<Contacto />} />
                     <Route path='*' element={<ErrorPage />} />
                 </Routes>
                 <ToastContainer/>

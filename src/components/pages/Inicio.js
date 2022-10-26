@@ -29,37 +29,37 @@ const Inicio = () => {
         <Main>
             <MyCarousel interval={8000} controls={false} indicators={false} keyboard={false} pause={false} touch={false}>
                 <MyCarouselItem>
-                    <img src={"../imgs/carousel/carousel1.jpg"} />
+                    <img src={"../imgs/carousel/carousel1.jpg"} alt="Carousel 1" />
                     <MyCarouselCaption>
                         <CaptionText>Vibramos en distintas frecuencias, <strong>compartimos un mismo ideal</strong>, ser nosotras mismas.</CaptionText>
                         <CaptionLink to="/tienda">TIENDA</CaptionLink>
                     </MyCarouselCaption>
                 </MyCarouselItem>
                 <MyCarouselItem>
-                    <img src={"../imgs/carousel/carousel2.jpg"} />
+                    <img src={"../imgs/carousel/carousel2.jpg"} alt="Carousel 2"  />
                     <MyCarouselCaption>
                         <CaptionText>Vibramos en distintas frecuencias, <strong>compartimos un mismo ideal</strong>, ser nosotras mismas.</CaptionText>
                         <CaptionLink to="/tienda">TIENDA</CaptionLink>
                     </MyCarouselCaption>
                 </MyCarouselItem>
                 <MyCarouselItem>
-                    <img src={"../imgs/carousel/carousel3.jpg"} />
+                    <img src={"../imgs/carousel/carousel3.jpg"} alt="Carousel 3"  />
                     <MyCarouselCaption>
                         <CaptionText>Vibramos en distintas frecuencias, <strong>compartimos un mismo ideal</strong>, ser nosotras mismas.</CaptionText>
                         <CaptionLink to="/tienda">TIENDA</CaptionLink>
                     </MyCarouselCaption>
                 </MyCarouselItem>
             </MyCarousel>
-            <section className="main__content">
-                <h2 className="content--title">OFERTAS</h2>
-                <article className="content__article">
-                    <ul className="article__menu" id="ofertasUl">
+            <InicioSection>
+                <SectionTitle>OFERTAS</SectionTitle>
+                <SectionArticle>
+                    <SectionList>
                         {
                             productosDesc.map(item => <ProductoItem key={item.id} producto={item}/> )
                         }
-                    </ul>
-                </article>
-            </section>
+                    </SectionList>
+                </SectionArticle>
+            </InicioSection>
         </Main>
     )
 }
@@ -134,6 +134,42 @@ const CaptionLink = styled(Link)`
         background-color: #FFF;
         color: #000;
     }
+`;
+
+const InicioSection = styled.section`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 80px;
+    text-align: center;
+    width: 100%;
+    max-width: 100vw;
+    gap: 20px;
+`;
+
+const SectionTitle = styled.h2`
+    font-weight: 600;
+`;
+
+const SectionArticle = styled.article`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+`;
+
+const SectionList = styled.ul`
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 `;
 
 export default Inicio;

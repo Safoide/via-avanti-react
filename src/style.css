@@ -1830,3 +1830,14 @@ h5 {
 @media only screen and (max-height: 680px) {
   .main .main__tienda .tienda__filtros {
     position: static; } }
+
+
+.swal-text {
+  text-align: center;
+}
+
+.swal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

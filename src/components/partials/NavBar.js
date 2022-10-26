@@ -25,6 +25,18 @@ const HeaderNav = styled.nav`
     width: 30rem;
     display: flex;
     align-items: center;
+
+    @media only screen and (min-width: 901px) and (max-width: 1280px) {
+        width: 23rem;
+    }
+
+    @media only screen and (min-width: 769px) and (max-width: 900px) {
+        width: 18rem;
+    }
+
+    @media only screen and (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const NavList = styled.ul`

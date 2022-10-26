@@ -1,22 +1,115 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+let burguerMenu;
+
+export const toggleMenu = () => {
+    burguerMenu.current.classList.toggle('active');
+}
 
 const BurguerMenu = () => {
+    burguerMenu = useRef();
+    
     return (
-        <nav className="burguerMenu" id="burguerMenu">
-            <ul className="nav__lista">
-                <li className="lista__item">
-                    <Link to={"/"} className="lista__item--link">INICIO</Link>
-                </li>
-                <li className="lista__item">
-                    <Link to={"/tienda"} className="lista__item--link"><span>TIENDA</span></Link>
-                </li>
-                <li className="lista__item">
-                    <Link to={"/contacto"} className="lista__item--link">AYUDA</Link>
-                </li>
-            </ul>
-        </nav>
+        <BurguerNav ref={burguerMenu}>
+            <BurguerList>
+                <BurguerItem>
+                    <BurguerLink to={"/"}>INICIO</BurguerLink>
+                </BurguerItem>
+                <BurguerItem>
+                    <BurguerLink to={"/tienda"}>TIENDA</BurguerLink>
+                </BurguerItem>
+                <BurguerItem>
+                    <BurguerLink to={"/contacto"}>AYUDA</BurguerLink>
+                </BurguerItem>
+            </BurguerList>
+        </BurguerNav>
     )
 }
+
+const BurguerList = styled.ul`
+    list-style-type: none;
+    padding: 15px 0;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+    transition: all .4s ease 0s;
+    animation: moveList2 .6s forwards;
+
+    
+    @keyframes moveList2 {    
+        from {
+            transform: translateY(0);
+        }
+
+        to {
+            transform: translateY(-200px);
+        }
+    }
+`;
+
+const BurguerNav = styled.nav`
+    background-color: #EBEBEB;
+    pointer-events: all;
+    z-index: 98;
+    transform: scale(1, 0);
+    transform-origin: top;
+    position: sticky;
+    top: 80px;
+    max-height: 0;
+    transition: max-height .4s ease 0s, transform 2s ease 0s;
+
+    &.active {
+        transform: scale(1, 1);
+        max-height: 276px;
+        transition: max-height .4s ease 0s, transform .2s ease 0s;
+
+        ${BurguerList} {
+            animation: moveList .2s forwards;
+        }
+    }
+
+    @keyframes moveList {
+        from {
+            transform: translateY(-200px);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+`;
+
+const BurguerItem = styled.li`
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+`;
+
+const BurguerLink = styled(Link)`
+    display: inline-block;
+    color: #000;
+    opacity: .7;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 0;
+    transition: $transition-4s;
+    width: 100%;
+    pointer-events: all;
+
+    &:hover,
+    &:focus {
+        background-color: #DBDBDB;
+        opacity: 1;
+        color: #000;
+    }
+`;
 
 export default BurguerMenu;

@@ -98,7 +98,7 @@ const Cart = () => {
         <Main>
             <MainTitle>CARRITO</MainTitle>
 
-            <CartSection id="section" className="main__content cart">
+            <CartSection>
                 {
                     cartItems.length === 0 ? 
                         <CartVacio>
@@ -109,7 +109,7 @@ const Cart = () => {
                         </CartVacio>
                     :
                         <>
-                            <CartTable className="content__table">
+                            <CartTable>
                                 <thead>
                                     <tr>
                                         <TableTag>Producto</TableTag>
@@ -118,7 +118,7 @@ const Cart = () => {
                                         <TableTag>Subtotal</TableTag>
                                     </tr>
                                 </thead>
-                                <tbody className="table__body">
+                                <tbody>
                                     {
                                         cartItems.map(item =>
                                             <tr key={item.docId}>
@@ -132,15 +132,17 @@ const Cart = () => {
                                                     </ItemProduct>
                                                 </RowItem>
                                                 <RowItem>
-                                                    <ItemText>{onDiscount(item)}</ItemText>
+                                                    <ItemText>${onDiscount(item)}</ItemText>
                                                 </RowItem>
                                                 <RowItem>
-                                                    <UnidadBtn disabled={item.cantidad <= 1 ? true : false} onClick={(event) => restarHandler(event, item)}>-</UnidadBtn>
-                                                    <ItemUnidades>{item.cantidad}</ItemUnidades>
-                                                    <UnidadBtn disabled={item.cantidad >= 10 ? true : false} onClick={(event) => sumarHandler(event, item)}>+</UnidadBtn>
+                                                    <RowUnidades>
+                                                        <UnidadBtn disabled={item.cantidad <= 1 ? true : false} onClick={(event) => restarHandler(event, item)}>-</UnidadBtn>
+                                                        <ItemUnidades>{item.cantidad}</ItemUnidades>
+                                                        <UnidadBtn disabled={item.cantidad >= 10 ? true : false} onClick={(event) => sumarHandler(event, item)}>+</UnidadBtn>
+                                                    </RowUnidades>
                                                 </RowItem>
                                                 <RowItem>
-                                                    <ItemText>{onDiscount(item) * item.cantidad}</ItemText>
+                                                    <ItemText>${onDiscount(item) * item.cantidad}</ItemText>
                                                 </RowItem>
                                             </tr>
                                         )
@@ -148,34 +150,34 @@ const Cart = () => {
                                 </tbody>
                             </CartTable>
 
-                            <div className="content__resumen">
-                                <h3 className="resumen--title">RESUMEN DE COMPRA</h3>
-                                <div className="resumen__bottom">
-                                    <div className="resumen__precios">
-                                        <table className="precios__table">
-                                            <tbody className="table__body">
-                                                <tr className="body__row">
-                                                    <th className="body__row--title">Subtotal</th>
-                                                    <td className="body__row--content" id="subtotal">    
+                            <CartResume>
+                                <ResumeTitle>RESUMEN DE COMPRA</ResumeTitle>
+                                <ResumeInfo>
+                                    <ResumePrice>
+                                        <ResumeTable>
+                                            <tbody>
+                                                <tr>
+                                                    <TableTitle>Subtotal</TableTitle>
+                                                    <TablePrice>    
                                                         $ { cartItems.reduce((previousValue, currentValue) => previousValue + (onDiscount(currentValue) * currentValue.cantidad), 0 ) }
-                                                    </td>
+                                                    </TablePrice>
                                                 </tr>
-                                                <tr className="body__row">
-                                                    <th className="body__row--title">Envío</th>
-                                                    <td className="body__row--content">$300</td>
+                                                <tr>
+                                                    <TableTitle>Envío</TableTitle>
+                                                    <TablePrice>$300</TablePrice>
                                                 </tr>
-                                                <tr className="body__row">
-                                                    <th className="body__row--title">Total</th>
-                                                    <td className="body__row--content" id="total">
+                                                <tr>
+                                                    <TableTitle>Total</TableTitle>
+                                                    <TablePrice>
                                                         $ { cartItems.reduce((previousValue, currentValue) => previousValue + (onDiscount(currentValue) * currentValue.cantidad), 0 ) + 300 }
-                                                    </td>
+                                                    </TablePrice>
                                                 </tr>
                                             </tbody>
-                                        </table>
-                                    </div>
-                                    <button className="resumen--boton" onClick={añadirOrden}>COMPRAR</button>
-                                </div>       
-                            </div>
+                                        </ResumeTable>
+                                    </ResumePrice>
+                                    <ResumeBtn className="resumen--boton" onClick={añadirOrden}>COMPRAR</ResumeBtn>
+                                </ResumeInfo>       
+                            </CartResume>
                         </>
                 }
             </CartSection>
@@ -189,17 +191,29 @@ const MainTitle = styled.h2`
 `;
 
 const CartSection = styled.section`
-    width: 60vw;
+    display: flex;
+    width: 90vw;
     max-width: 1200px;
+    justify-content: flex-start;
+    align-items: center;
     padding: 0;
     flex-direction: row;
     gap: 1rem;
     margin: 0 20px 40px 20px;
+
+    @media only screen and (max-width: 900px) {
+        flex-direction: column;
+        gap: 20px;
+    }
 `;
 
 const CartTable = styled.table`
     width: 70%;
     border-collapse: collapse;
+
+    @media only screen and (max-width: 900px) {
+        width: 100%;
+    }
 `;
 
 const TableTag = styled.th`
@@ -211,6 +225,7 @@ const TableTag = styled.th`
 const RowItem = styled.th`
     border-top: 1px solid #ededed;
     padding: 5px 5px;
+    text-align: center;
 `;
 
 const ItemProduct = styled.div`
@@ -235,11 +250,25 @@ const ItemLink = styled(Link)`
         height: 140px;
         margin: 0 10px;
     }
+
+    @media only screen and (max-width: 519px) {
+        flex-direction: column;
+
+        img {
+            height: 100px;
+        }
+    }
 `;
 
 const ItemText = styled.span`
     color: black;
     font-weight: 700;
+`;
+
+const RowUnidades = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const ItemUnidades = styled.span`
@@ -304,6 +333,79 @@ const UnidadBtn = styled.button`
 
     &:hover {
         background: rgba(0, 0, 0, .1);
+    }
+`;
+
+const CartResume = styled.div`
+    margin-top: 1rem;
+    width: 30%;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1rem;
+
+    @media only screen and (max-width: 900px) {
+        width: 100%;
+    }
+`;
+
+const ResumeTitle = styled.h3`
+    margin-top: 9px;
+    font-size: 1rem;
+`;
+
+const ResumeInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+`;
+
+const ResumePrice = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+const ResumeTable = styled.table`
+    width: 100%;
+`;
+
+const TableTitle = styled.th`
+    color: #686868;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 0;
+`;
+
+const TablePrice = styled.td`
+    color: #252525;
+    text-align: right;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 10px 0;
+`;
+
+const ResumeBtn = styled.button`
+    padding: 20px 40px;
+    border-radius: 10px;
+    background-color: #0f700d;
+    margin-bottom: 20px;
+    font-weight: 600;
+    opacity: .7;
+    color: white;
+    border: 0;
+    transition: all .4s ease 0s;
+
+    &:hover {
+        opacity: 1;
     }
 `;
 
