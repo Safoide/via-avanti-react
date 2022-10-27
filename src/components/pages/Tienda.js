@@ -35,16 +35,12 @@ const Tienda = () => {
     
     const ordenarHandler = (e) => {
         let sorted = e.target.value;
-
         let sortedArr;
 
-        if(sorted === 'nuevos') {
-            sortedArr = productos.sort((a, b) => a.id - b.id);
-        } else if(sorted === 'preciomenor') {
-            sortedArr = productos.sort((a, b) => onDiscount(a) - onDiscount(b));
-        } else {
-            sortedArr = productos.sort((a, b) => onDiscount(b) - onDiscount(a));
-        }
+        if(sorted === 'nuevos') sortedArr = productos.sort((a, b) => a.id - b.id);
+        else if(sorted === 'preciomenor') sortedArr = productos.sort((a, b) => onDiscount(a) - onDiscount(b));
+        else sortedArr = productos.sort((a, b) => onDiscount(b) - onDiscount(a));
+
 
         categoria ?
             setProductosByCategory(filterByCategory(sortedArr))
@@ -116,7 +112,7 @@ const Tienda = () => {
                                 categories.map(category => 
                                     <InputContainer key={category}>
                                         <InputTitle>{category}</InputTitle>
-                                        <InputLink to={`/tienda/${category.toLowerCase()}`} className="input">
+                                        <InputLink to={`/tienda/${category.toLowerCase()}`}>
                                             <FiltrosInput type="checkbox" name="categoria" id={category}/>
                                             <InputCount>{productos.filter(item => itemCategory(item) === category).length}</InputCount>
                                         </InputLink>
@@ -158,8 +154,8 @@ const Tienda = () => {
                                 productosByCategory.map(item => <ProductoItem key={item.id} producto={item}/> )
                         }
                     </ProductosLista>
-                    <ProductosBottom className="productos__bottom">
-                        <ProductosLinea className="bottom--linea"></ProductosLinea>
+                    <ProductosBottom>
+                        <ProductosLinea></ProductosLinea>
                     </ProductosBottom>
                 </ProductosTienda>
             </SectionTienda>

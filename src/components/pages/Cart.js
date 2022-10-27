@@ -175,7 +175,7 @@ const Cart = () => {
                                             </tbody>
                                         </ResumeTable>
                                     </ResumePrice>
-                                    <ResumeBtn className="resumen--boton" onClick={añadirOrden}>COMPRAR</ResumeBtn>
+                                    <ResumeBtn onClick={añadirOrden}>COMPRAR</ResumeBtn>
                                 </ResumeInfo>       
                             </CartResume>
                         </>

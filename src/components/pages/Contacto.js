@@ -65,7 +65,7 @@ const Contacto = () => {
                             <InputLabel for="email">Correo electrónico <strong>*</strong></InputLabel>
                             <Input className="email" type="email" name="user_email" placeholder="Correo Electrónico" required/>
                         </InputsContainer>
-                        <InputsContainer className="comentario">
+                        <InputsContainer>
                             <InputLabel for="textarea">Comentario o mensaje <strong>*</strong></InputLabel>
                             <InputText name="user_message" placeholder="Dejanos tu mensaje..." required></InputText>
                         </InputsContainer>
