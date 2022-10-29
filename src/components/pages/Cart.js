@@ -1,98 +1,39 @@
 import { useCart } from "../../context/CartContext";
 import { Main } from "./Inicio";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import Modal from 'react-modal';
+import CartItem from "../CartItem";
+import ModalContent from "../ModalContent";
+
+const modalStyles = {
+    overlay: {
+        zIndex: 300,
+        backgroundColor: 'rgba(255, 255, 255, .3)'
+    },
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    }
+};
+
+Modal.setAppElement('#root');
 
 const Cart = () => {
+    
+    const {cartItems } = useCart();
 
-    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => setIsOpen(false);
 
     const onDiscount = (item) => (item.precio_rebajado ? item.precio_rebajado : item.precio_normal);
-
-    const {cartItems, setCartItems, remove} = useCart();
-
-    const removeFromCart = (item) => {
-        remove(item);
-
-        toast.error(`${item.nombre} fue eliminado del carrito!`, {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: false,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            onClick: () => navigate(`/producto/${item.tag}`)
-        });
-    }
-
-    const añadirOrden = (e) => {
-        e.preventDefault();
-
-        const ordenObj = {
-            fecha: new Date(),
-            items: cartItems
-        }
-
-        const db = getFirestore();
-        const ordersCollection = collection(db, "orders");
-
-        addDoc(ordersCollection, ordenObj);
-    }
-
-    const recargarBoton = (sibling, unidades) => {
-        if(unidades < 10) {
-            sibling.nextElementSibling.disabled = false;
-        }
-        if(unidades > 1) {
-            sibling.previousElementSibling.disabled = false;
-        }
-    }
-
-    const restarHandler = (event, item) => {
-        let unidades = item.cantidad;
-        const actualizarCantidad = cartItems.map(obj => {
-            if (obj.docId === item.docId) {
-                unidades--;
-                return {
-                    ...obj,
-                    cantidad: obj.cantidad - 1
-                };
-            }
-            
-            return obj;
-        });
-        
-        setCartItems(actualizarCantidad);
-
-        if(unidades <= 1) event.target.disabled = true;
-
-        recargarBoton(event.target.nextElementSibling, unidades);
-    }
-
-    const sumarHandler = (event, item) => {
-        let unidades = item.cantidad;
-
-        const actualizarCantidad = cartItems.map(obj => {
-            if (obj.docId === item.docId) {
-                unidades++;
-                return {
-                    ...obj,
-                    cantidad: obj.cantidad + 1
-                };
-            }
-        
-            return obj;
-        });
-        
-        setCartItems(actualizarCantidad);
-
-        if(unidades >= 10) event.target.disabled = true;
-
-        recargarBoton(event.target.previousElementSibling, unidades);
-    }
 
     return (
         <Main>
@@ -120,32 +61,7 @@ const Cart = () => {
                                 </thead>
                                 <tbody>
                                     {
-                                        cartItems.map(item =>
-                                            <tr key={item.docId}>
-                                                <RowItem>
-                                                    <ItemProduct>
-                                                        <i onClick={() => removeFromCart(item)} className='bx bx-trash'></i>
-                                                        <ItemLink to={`/producto/${item.tag}`}>
-                                                            <img src={item.imagenes[0]} alt={item.nombre} />
-                                                            <ItemText >{item.nombre}</ItemText>
-                                                        </ItemLink>
-                                                    </ItemProduct>
-                                                </RowItem>
-                                                <RowItem>
-                                                    <ItemText>${onDiscount(item)}</ItemText>
-                                                </RowItem>
-                                                <RowItem>
-                                                    <RowUnidades>
-                                                        <UnidadBtn disabled={item.cantidad <= 1 ? true : false} onClick={(event) => restarHandler(event, item)}>-</UnidadBtn>
-                                                        <ItemUnidades>{item.cantidad}</ItemUnidades>
-                                                        <UnidadBtn disabled={item.cantidad >= 10 ? true : false} onClick={(event) => sumarHandler(event, item)}>+</UnidadBtn>
-                                                    </RowUnidades>
-                                                </RowItem>
-                                                <RowItem>
-                                                    <ItemText>${onDiscount(item) * item.cantidad}</ItemText>
-                                                </RowItem>
-                                            </tr>
-                                        )
+                                        cartItems.map(item => <CartItem key={item.docId} item={item}/> )
                                     }
                                 </tbody>
                             </CartTable>
@@ -153,7 +69,7 @@ const Cart = () => {
                             <CartResume>
                                 <ResumeTitle>RESUMEN DE COMPRA</ResumeTitle>
                                 <ResumeInfo>
-                                    <ResumePrice>
+                                    <ResumePrices>
                                         <ResumeTable>
                                             <tbody>
                                                 <tr>
@@ -164,7 +80,7 @@ const Cart = () => {
                                                 </tr>
                                                 <tr>
                                                     <TableTitle>Envío</TableTitle>
-                                                    <TablePrice>$300</TablePrice>
+                                                    <TablePrice>$ 300</TablePrice>
                                                 </tr>
                                                 <tr>
                                                     <TableTitle>Total</TableTitle>
@@ -174,13 +90,22 @@ const Cart = () => {
                                                 </tr>
                                             </tbody>
                                         </ResumeTable>
-                                    </ResumePrice>
-                                    <ResumeBtn onClick={añadirOrden}>COMPRAR</ResumeBtn>
+                                    </ResumePrices>
+                                    <ResumeBtn onClick={openModal}>TERMINAR COMPRA</ResumeBtn>
                                 </ResumeInfo>       
                             </CartResume>
                         </>
                 }
             </CartSection>
+
+            <Modal
+              isOpen={isOpen}
+              onRequestClose={closeModal}
+              style={modalStyles}
+            >
+                <ModalContent />
+                <button onClick={closeModal}>close</button>
+            </Modal>
         </Main>
     )
 }
@@ -220,61 +145,6 @@ const TableTag = styled.th`
     border-bottom: 2px solid #ededed;
     padding: 9px 12px;
     text-align: center;
-`;
-
-const RowItem = styled.th`
-    border-top: 1px solid #ededed;
-    padding: 5px 5px;
-    text-align: center;
-`;
-
-const ItemProduct = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: 10px;
-
-    .bx::before {
-        font-size: 1.25rem;
-        color: red;
-        cursor: pointer;
-    }
-`;
-
-const ItemLink = styled(Link)`
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-
-    img {
-        height: 140px;
-        margin: 0 10px;
-    }
-
-    @media only screen and (max-width: 519px) {
-        flex-direction: column;
-
-        img {
-            height: 100px;
-        }
-    }
-`;
-
-const ItemText = styled.span`
-    color: black;
-    font-weight: 700;
-`;
-
-const RowUnidades = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
-const ItemUnidades = styled.span`
-    display: inline-block;
-    width: 30px;
-    padding: 0 5px;
 `;
 
 const CartVacio = styled.div`
@@ -318,24 +188,6 @@ const VacioLink = styled(Link)`
     }
 `;
 
-const UnidadBtn = styled.button`
-    border: 1px solid rgba(0, 0, 0, 1);
-    width: 30px;
-    height: 30px;
-    background: #fff;
-    font-weight: 700;
-    transition: all .3s ease 0s;
-
-    &:disabled {
-        color: gray;
-        border-color: rgba(0, 0, 0, .4);
-    }
-
-    &:hover {
-        background: rgba(0, 0, 0, .1);
-    }
-`;
-
 const CartResume = styled.div`
     margin-top: 1rem;
     width: 30%;
@@ -365,7 +217,7 @@ const ResumeInfo = styled.div`
     gap: 20px;
 `;
 
-const ResumePrice = styled.div`
+const ResumePrices = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -386,7 +238,7 @@ const TableTitle = styled.th`
 `;
 
 const TablePrice = styled.td`
-    color: #252525;
+    color: #098003;
     text-align: right;
     font-weight: 500;
     font-size: 1rem;

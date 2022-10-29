@@ -55,18 +55,18 @@ const Contacto = () => {
                 <ContactoForm ref={form} onSubmit={sendEmail}>
                     <FormInputs>
                         <InputsContainer >
-                            <InputLabel for="name">Nombre completo <strong>*</strong></InputLabel>
+                            <InputLabel htmlFor="user_name">Nombre completo <strong>*</strong></InputLabel>
                             <InputNames>
-                                <Input type="text" name="user_name" placeholder="Nombre" autofocus required/>
+                                <Input type="text" name="user_name" placeholder="Nombre" autoFocus required/>
                                 <Input type="text" name="user_surname" placeholder="Apellido/s" required/>
                             </InputNames>
                         </InputsContainer>
                         <InputsContainer>
-                            <InputLabel for="email">Correo electrónico <strong>*</strong></InputLabel>
+                            <InputLabel htmlFor="user_email">Correo electrónico <strong>*</strong></InputLabel>
                             <Input className="email" type="email" name="user_email" placeholder="Correo Electrónico" required/>
                         </InputsContainer>
                         <InputsContainer>
-                            <InputLabel for="textarea">Comentario o mensaje <strong>*</strong></InputLabel>
+                            <InputLabel htmlFor="user_message">Comentario o mensaje <strong>*</strong></InputLabel>
                             <InputText name="user_message" placeholder="Dejanos tu mensaje..." required></InputText>
                         </InputsContainer>
                     </FormInputs>

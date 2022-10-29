@@ -66,11 +66,8 @@ const Tienda = () => {
                 setProductosByCategory(filterByCategory(productsData))
             :
                 setProductosByCategory(productsData)
-                       
-            let categoriasArr = [];
-            productsData.forEach(item => {
-                if(!categoriasArr.includes(itemCategory(item))) categoriasArr.push(itemCategory(item));
-            })
+
+            let categoriasArr = [...new Set(productsData.map(product => itemCategory(product)))];
 
             setCategories(categoriasArr);
 
@@ -139,15 +136,15 @@ const Tienda = () => {
                             isArrayEmpty(productosByCategory) ?
                                 loading ? 
                                     <Oval
-                                    height={80}
-                                    width={80}
-                                    color="#3498db"
-                                    wrapperStyle={{ gridColumnEnd: 'span 4', justifySelf: 'center', margin: '100px' }}
-                                    visible={true}
-                                    ariaLabel='Cargando...'
-                                    secondaryColor="#f3f3f3"
-                                    strokeWidth={3}
-                                    strokeWidthSecondary={3}/>
+                                      height={80}
+                                      width={80}
+                                      color="#3498db"
+                                      wrapperStyle={{ gridColumnEnd: 'span 4', justifySelf: 'center', margin: '100px' }}
+                                      visible={true}
+                                      ariaLabel='Cargando...'
+                                      secondaryColor="#f3f3f3"
+                                      strokeWidth={3}
+                                      strokeWidthSecondary={3}/>
                                 :
                                     <h1 style={{ gridColumnEnd: 'span 4', textAlign: 'center' }}>NO SE ENCONTRARON PRODUCTOS</h1>
                             :

@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const ProductoItem = ( props ) => {
-    let producto = props.producto;
+const ProductoItem = ({ producto }) => {
 
     return (
         producto.precio_rebajado ?
