@@ -103,8 +103,7 @@ const Cart = () => {
               onRequestClose={closeModal}
               style={modalStyles}
             >
-                <ModalContent />
-                <button onClick={closeModal}>close</button>
+                <ModalContent modal={setIsOpen}/>
             </Modal>
         </Main>
     )

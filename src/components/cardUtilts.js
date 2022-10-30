@@ -1,52 +1,61 @@
-import Payment from 'payment'
+import Payment from 'payment';
 
 function clearNumber(value = '') {
-  return value.replace(/\D+/g, '')
+  return value.replace(/\D+/g, '');
 }
+
+// Funcion para chequear si la tarjeta es valida.
+// export function checkCreditCard(value) {
+//   const clearValue = clearNumber(value);
+
+//   let isValid = Payment.fns.validateCardNumber(clearValue);
+
+//   return isValid;
+// }
 
 export function formatCreditCardNumber(value) {
   if (!value) {
-    return value
+    return value;
   }
 
-  const issuer = Payment.fns.cardType(value)
-  const clearValue = clearNumber(value)
-  let nextValue
+  const issuer = Payment.fns.cardType(value);
+  const clearValue = clearNumber(value);
+  let nextValue;
 
   switch (issuer) {
     case 'amex':
       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
         4,
         10
-      )} ${clearValue.slice(10, 15)}`
-      break
+      )} ${clearValue.slice(10, 15)}`;
+      break;
     case 'dinersclub':
       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
         4,
         10
-      )} ${clearValue.slice(10, 14)}`
-      break
+      )} ${clearValue.slice(10, 14)}`;
+      break;
     default:
       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(
         4,
         8
-      )} ${clearValue.slice(8, 12)} ${clearValue.slice(12, 19)}`
-      break
+      )} ${clearValue.slice(8, 12)} ${clearValue.slice(12, 19)}`;
+      break;
   }
 
-  return nextValue.trim()
+  return nextValue.trim();
 }
 
 export function formatCVC(value, allValues = {}) {
-  const clearValue = clearNumber(value)
-  let maxLength = 4
+  const clearValue = clearNumber(value);
+  let maxLength = 4;
 
   if (allValues.number) {
-    const issuer = Payment.fns.cardType(allValues.number)
-    maxLength = issuer === 'amex' ? 4 : 3
+    const issuer = Payment.fns.cardType(allValues.number);
+    maxLength = issuer === 'amex' ? 4 : 3;
   }
 
-  return clearValue.slice(0, maxLength)
+  return clearValue.slice(0, maxLength);
 }
 
 export function formatExpirationDate(value, e) {
@@ -63,7 +72,7 @@ export function formatExpirationDate(value, e) {
   let actualYear = actualDate.getFullYear().toString();
 
   if (parseInt(clearValue.slice(0, 2)) <= actualMonth && parseInt(clearValue.slice(2, 4)) === parseInt(actualYear.slice(2, 4))) {
-    e.target.setCustomValidity('incorrecto');
+    e.target.setCustomValidity('Fecha inválida');
   }
 
   if (clearValue.length >= 3) {

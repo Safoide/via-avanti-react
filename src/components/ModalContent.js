@@ -2,6 +2,7 @@
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import {
+    checkCreditCard,
     formatCreditCardNumber,
     formatCVC,
     formatExpirationDate
@@ -11,13 +12,24 @@ import { useState } from "react";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 import { Oval } from 'react-loader-spinner';
+import { useCart } from '../context/CartContext.js';
+import { getFirestore, addDoc, collection } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 // import { useCart } from "../context/CartContext.js";
 
 const MySwal = withReactContent(Swal);
 
-const ModalContent = () => {
+const ModalContent = ({modal}) => {
 
-    const [loading, setLoading] = useState(true);
+    const {cartItems, setCartItems} = useCart();
+
+    const [inputs, setInputs] = useState({
+        cvc: {},
+        expiry: {},
+        name: {},
+        number: {} 
+    });
+
     const [cardInfo, setCardInfo] = useState({
         cvc: '',
         expiry: '',
@@ -26,7 +38,7 @@ const ModalContent = () => {
         number: '',
     });
 
-    // const {cartItems, setCartItems } = useCart();
+    const navigate = useNavigate();
 
     const handleInputFocus = (e) => setCardInfo({ ...cardInfo, focus: e.target.name });
       
@@ -34,37 +46,43 @@ const ModalContent = () => {
         let { name, value } = e.target;
         e.target.setCustomValidity('');
 
-        if (name === "number") {
-            value = formatCreditCardNumber(value);
-        } else if (name === "expiry") {
-            value = formatExpirationDate(value, e);
-        } else if (name === "cvc") {
-            value = formatCVC(value, cardInfo);
+        switch (name) {
+            case "number":
+                value = formatCreditCardNumber(value);
+                break;
+            case "expiry":
+                value = formatExpirationDate(value, e);
+                break;
+            case "cvc":
+                value = formatCVC(value, cardInfo);
+                break;
         }
         
+        setInputs({ ...inputs, [name]: e.target });
         setCardInfo({ ...cardInfo, [name]: value });
     }
 
-    // const añadirOrden = (e) => {
-    //     e.preventDefault();
+    const añadirOrden = () => {
+        const ordenObj = {
+            fecha: new Date(),
+            items: cartItems
+        }
 
-    //     const ordenObj = {
-    //         fecha: new Date(),
-    //         items: cartItems
-    //     }
+        const db = getFirestore();
+        const ordersCollection = collection(db, "orders");
 
-    //     const db = getFirestore();
-    //     const ordersCollection = collection(db, "orders");
-
-    //     addDoc(ordersCollection, ordenObj);
+        addDoc(ordersCollection, ordenObj);
         
-    //     setCartItems([]);
-    // }
+        setCartItems([]);
+        modal(false);
+    }
 
     const handleSumbit = (e) => {
         e.preventDefault();
 
-        console.log(cardInfo);
+        if(cardInfo.number.split(' ').join('').length < 16) return inputs.number.setCustomValidity('Numero invalido!');
+        if(cardInfo.cvc.length < 3) return inputs.cvc.setCustomValidity('Numero invalido!');
+        if(cardInfo.expiry.length < 5) return inputs.expiry.setCustomValidity('Numero invalido!');
 
         MySwal.fire({
             title: <Oval
@@ -74,25 +92,34 @@ const ModalContent = () => {
                 visible={true}
                 ariaLabel='Cargando...'
                 secondaryColor="#f3f3f3"
+                wrapperStyle={{ display: 'flex', justifyContent: 'center'}}
                 strokeWidth={3}
                 strokeWidthSecondary={3}/>,
             showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
             timer: 2000
         }).then(() => {
             MySwal.fire({
-                title: "¡Correo enviado con Éxito!",
-                text: "Gracias por tu consulta, en breve nos pondremos en contacto.",
+                title: "¡Pago Aprobado!",
+                text: "Gracias por tu compra.",
                 icon: "success",
-                closeOnClickOutside: true,
-                button: {
-                    text: 'VOLVER AL INICIO'
-                }
+                confirmButtonText: 'VOLVER AL INICIO'
+            }).then((isConfirmed) => {
+                if(isConfirmed) navigate('/');
             })
-        })
 
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000)
+            añadirOrden();
+        })
+        
+        setCardInfo({
+            cvc: '',
+            expiry: '',
+            focus: '',
+            name: '',
+            number: '',
+        });
     }
 
     return (
