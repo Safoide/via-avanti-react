@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import emailjs from '@emailjs/browser';  
 import { Main } from './Inicio';
 import styled from 'styled-components';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const Contacto = () => {
@@ -17,16 +17,13 @@ const Contacto = () => {
         emailjs.sendForm('service_t9tqlsm', 'template_3mlzhdi', form.current, 'slU4ntJqpV3aDM9cA')
             .then((result) => {
                 result.text === 'OK' ? 
-                    swal({
+                    swal.fire({
                         title: "¡Correo enviado con Éxito!",
                         text: "Gracias por tu consulta, en breve nos pondremos en contacto.",
                         icon: "success",
-                        closeOnClickOutside: true,
-                        button: {
-                            text: 'VOLVER AL INICIO'
-                        }
-                    }).then((isConfirmed) => {
-                        if(isConfirmed) navigate('/');
+                        confirmButtonText: 'VOLVER AL INICIO'
+                    }).then((status) => {
+                        if(status.isConfirmed) navigate('/');
                     })
                 :
                     swal({

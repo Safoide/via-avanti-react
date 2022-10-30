@@ -1,4 +1,4 @@
-// import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import {
@@ -13,9 +13,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 import { Oval } from 'react-loader-spinner';
 import { useCart } from '../context/CartContext.js';
-import { getFirestore, addDoc, collection } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-// import { useCart } from "../context/CartContext.js";
 
 const MySwal = withReactContent(Swal);
 
@@ -43,8 +41,9 @@ const ModalContent = ({modal}) => {
     const handleInputFocus = (e) => setCardInfo({ ...cardInfo, focus: e.target.name });
       
     const handleInputChange = (e) => {
-        let { name, value } = e.target;
         e.target.setCustomValidity('');
+
+        let { name, value } = e.target;
 
         switch (name) {
             case "number":
@@ -80,9 +79,18 @@ const ModalContent = ({modal}) => {
     const handleSumbit = (e) => {
         e.preventDefault();
 
-        if(cardInfo.number.split(' ').join('').length < 16) return inputs.number.setCustomValidity('Numero invalido!');
-        if(cardInfo.cvc.length < 3) return inputs.cvc.setCustomValidity('Numero invalido!');
-        if(cardInfo.expiry.length < 5) return inputs.expiry.setCustomValidity('Numero invalido!');
+        if(cardInfo.number.split(' ').join('').length < 16) {
+            inputs.number.setCustomValidity('Numero invalido!');
+            return inputs.number.reportValidity();
+        }
+        if(cardInfo.cvc.length < 3) {
+            inputs.cvc.setCustomValidity('Numero invalido!');
+            return inputs.cvc.reportValidity();
+        }
+        if(cardInfo.expiry.split('/').join('').length < 4) {
+            inputs.expiry.setCustomValidity('Numero invalido!');
+            return inputs.number.reportValidity();
+        }
 
         MySwal.fire({
             title: <Oval
